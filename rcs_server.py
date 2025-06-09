@@ -1,17 +1,22 @@
 # rcs_server.py
 from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import Request
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import socket
 
 app = FastAPI()
 
-# Định nghĩa schema nếu cần nhận JSON
-class Payload(BaseModel):
-    data: str
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # hoặc chỉ định cụ thể, ví dụ ["http://localhost:3000"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/ics/taskOrder/addTask")
-async def receive_data(payload: Payload):
+async def receive_data(request: Request):
+    payload =await request.json()
     print("Received:", payload)
     return {
         "code": 1000,
@@ -20,8 +25,7 @@ async def receive_data(payload: Payload):
 
 if __name__ == "__main__":
     # Lấy IP nội bộ của máy host
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
+    hostname = "192.168.1.99"
 
     # Chạy server trực tiếp
-    uvicorn.run("rcs_server:app", host=local_ip, port=8000, reload=True)
+    uvicorn.run("rcs_server:app", host=hostname, port=8000, reload=True)
