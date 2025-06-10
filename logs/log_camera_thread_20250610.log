@@ -1,0 +1,143 @@
+2025-06-10 07:43:04,404 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 07:43:04,405 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 07:43:08,128 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 07:43:08,129 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 07:43:11,916 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 07:43:11,916 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 08:08:21,868 - INFO - Display window for camera 2 closed
+2025-06-10 08:08:21,878 - INFO - CameraThread for camera 2 stopped
+2025-06-10 08:08:21,891 - INFO - Display window for camera 0 closed
+2025-06-10 08:08:21,901 - INFO - CameraThread for camera 0 stopped
+2025-06-10 08:08:21,965 - INFO - Display window for camera 1 closed
+2025-06-10 08:08:21,977 - INFO - CameraThread for camera 1 stopped
+2025-06-10 08:08:32,168 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 08:08:32,169 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 08:08:35,940 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 08:08:35,940 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 08:08:39,680 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 08:08:39,681 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 08:45:19,463 - INFO - Display window for camera 1 closed
+2025-06-10 08:45:19,472 - INFO - CameraThread for camera 1 stopped
+2025-06-10 08:45:19,531 - INFO - Display window for camera 2 closed
+2025-06-10 08:45:19,543 - INFO - Display window for camera 0 closed
+2025-06-10 08:45:19,544 - INFO - CameraThread for camera 2 stopped
+2025-06-10 08:45:19,555 - INFO - CameraThread for camera 0 stopped
+2025-06-10 09:16:03,073 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 09:16:03,074 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 09:16:06,847 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 09:16:06,847 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 09:16:10,599 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 09:16:10,599 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 09:34:35,035 - INFO - Display window for camera 0 closed
+2025-06-10 09:34:35,045 - INFO - Display window for camera 2 closed
+2025-06-10 09:34:35,057 - INFO - CameraThread for camera 0 stopped
+2025-06-10 09:34:35,064 - INFO - CameraThread for camera 2 stopped
+2025-06-10 09:34:35,117 - INFO - Display window for camera 1 closed
+2025-06-10 09:34:35,131 - INFO - CameraThread for camera 1 stopped
+2025-06-10 09:47:28,982 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 09:47:28,982 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 09:47:32,717 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 09:47:32,718 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 09:47:36,469 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 09:47:36,469 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 09:59:23,384 - INFO - Display window for camera 2 closed
+2025-06-10 09:59:23,394 - INFO - CameraThread for camera 2 stopped
+2025-06-10 09:59:23,416 - INFO - Display window for camera 1 closed
+2025-06-10 09:59:23,427 - INFO - CameraThread for camera 1 stopped
+2025-06-10 09:59:23,480 - INFO - Display window for camera 0 closed
+2025-06-10 09:59:23,493 - INFO - CameraThread for camera 0 stopped
+2025-06-10 10:51:03,873 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 10:51:03,874 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 10:51:07,654 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 10:51:07,655 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 10:51:11,412 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 10:51:11,413 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 10:52:17,143 - INFO - Quit key 'q' detected for camera 0
+2025-06-10 10:52:17,167 - INFO - Display window for camera 0 closed
+2025-06-10 10:52:17,213 - INFO - Display window for camera 2 closed
+2025-06-10 10:52:17,222 - INFO - CameraThread for camera 2 stopped
+2025-06-10 10:52:17,292 - INFO - Display window for camera 1 closed
+2025-06-10 10:52:17,303 - INFO - CameraThread for camera 1 stopped
+2025-06-10 10:52:17,353 - INFO - CameraThread for camera 0 stopped
+2025-06-10 13:16:56,896 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 13:16:56,896 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 13:17:00,696 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 13:17:00,696 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 13:17:04,455 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 13:17:04,455 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 13:30:21,210 - INFO - Display window for camera 0 closed
+2025-06-10 13:30:21,222 - INFO - CameraThread for camera 0 stopped
+2025-06-10 13:30:21,294 - INFO - Display window for camera 2 closed
+2025-06-10 13:30:21,305 - INFO - CameraThread for camera 2 stopped
+2025-06-10 13:30:21,324 - INFO - Display window for camera 1 closed
+2025-06-10 13:30:21,338 - INFO - CameraThread for camera 1 stopped
+2025-06-10 15:12:58,658 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 15:12:58,659 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 15:13:02,472 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 15:13:02,473 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 15:13:06,235 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 15:13:06,236 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 15:23:45,720 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 15:23:45,720 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 15:23:49,525 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 15:23:49,526 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 15:23:53,300 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 15:23:53,300 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 15:24:54,622 - INFO - Quit key 'q' detected for camera 2
+2025-06-10 15:24:54,641 - INFO - Display window for camera 2 closed
+2025-06-10 15:24:54,681 - INFO - Display window for camera 0 closed
+2025-06-10 15:24:54,692 - INFO - CameraThread for camera 0 stopped
+2025-06-10 15:24:54,695 - INFO - Display window for camera 1 closed
+2025-06-10 15:24:54,706 - INFO - CameraThread for camera 1 stopped
+2025-06-10 15:24:54,783 - INFO - CameraThread for camera 2 stopped
+2025-06-10 15:38:38,110 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 15:38:38,111 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 15:38:41,919 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 15:38:41,920 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 15:38:45,686 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 15:38:45,687 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 15:58:02,422 - INFO - Quit key 'q' detected for camera 2
+2025-06-10 15:58:02,440 - INFO - Display window for camera 2 closed
+2025-06-10 15:58:02,498 - INFO - Display window for camera 1 closed
+2025-06-10 15:58:02,510 - INFO - CameraThread for camera 1 stopped
+2025-06-10 15:58:02,530 - INFO - Display window for camera 0 closed
+2025-06-10 15:58:02,541 - INFO - CameraThread for camera 0 stopped
+2025-06-10 15:58:02,594 - INFO - CameraThread for camera 2 stopped
+2025-06-10 15:58:35,295 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 15:58:35,295 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 15:58:39,105 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 15:58:39,106 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 15:58:42,876 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 15:58:42,877 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 15:59:02,790 - INFO - Quit key 'q' detected for camera 1
+2025-06-10 15:59:02,811 - INFO - Display window for camera 1 closed
+2025-06-10 15:59:02,892 - INFO - Display window for camera 2 closed
+2025-06-10 15:59:02,901 - INFO - CameraThread for camera 2 stopped
+2025-06-10 15:59:02,951 - INFO - CameraThread for camera 1 stopped
+2025-06-10 15:59:02,986 - INFO - Display window for camera 0 closed
+2025-06-10 15:59:02,997 - INFO - CameraThread for camera 0 stopped
+2025-06-10 16:48:42,411 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 16:48:42,412 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 16:48:46,227 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 16:48:46,228 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 16:48:50,009 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 16:48:50,009 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 16:49:12,529 - INFO - Quit key 'q' detected for camera 2
+2025-06-10 16:49:12,551 - INFO - Display window for camera 2 closed
+2025-06-10 16:49:12,570 - INFO - Display window for camera 1 closed
+2025-06-10 16:49:12,581 - INFO - CameraThread for camera 1 stopped
+2025-06-10 16:49:12,588 - INFO - Display window for camera 0 closed
+2025-06-10 16:49:12,599 - INFO - CameraThread for camera 0 stopped
+2025-06-10 16:49:12,723 - INFO - CameraThread for camera 2 stopped
+2025-06-10 16:49:22,560 - INFO - DisplayThread for camera 0 initialized
+2025-06-10 16:49:22,560 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101
+2025-06-10 16:49:26,371 - INFO - DisplayThread for camera 1 initialized
+2025-06-10 16:49:26,371 - INFO - CameraThread for camera 1 initialized with URL rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101
+2025-06-10 16:49:30,159 - INFO - DisplayThread for camera 2 initialized
+2025-06-10 16:49:30,159 - INFO - CameraThread for camera 2 initialized with URL rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101
+2025-06-10 16:49:37,260 - INFO - Display window for camera 0 closed
+2025-06-10 16:49:37,279 - INFO - CameraThread for camera 0 stopped
+2025-06-10 16:49:37,334 - INFO - Display window for camera 2 closed
+2025-06-10 16:49:37,346 - INFO - CameraThread for camera 2 stopped
+2025-06-10 16:49:37,390 - INFO - Display window for camera 1 closed
+2025-06-10 16:49:37,402 - INFO - CameraThread for camera 1 stopped

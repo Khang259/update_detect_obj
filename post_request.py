@@ -1,7 +1,7 @@
 import requests
 import threading
 import logging
-from datetime import datetime
+from datetime import datetime, time
 import os
 
 # Logging configuration
@@ -34,40 +34,73 @@ def get_and_increment_count(file_path='count.txt'):
         f.truncate()
     return count
 
-def send_post_request(pair_manager, camera_id: int, start_idx: str, end_idx: str, api_url: str):
-    """Send POST request to API."""
+def send_post_request(pair_manager, camera_id: int, start_idx: str, end_idx: str, api_url: str, max_retries=3):
     count = get_and_increment_count()
     data = {
         "modelProcessCode": "checking_camera_work",
         "fromSystem": "ICS",
         "orderId": f"thaod_1_2_{count}",
-        "taskOrderDetail": [
-            {
-                "taskPath": f"{start_idx},{end_idx}"
-            }
-        ]
+        "taskOrderDetail": [{"taskPath": f"{start_idx},{end_idx}"}]
     }
-    try:
-        response = requests.post(api_url, json=data)
-        response_json = response.json()
-        if response_json.get("code") == 1000:  # Check for status code 1000
-            pair_manager.mark_post_sent(camera_id, start_idx, end_idx, True)
-            logger.info(f"POST sent for camera {camera_id + 1}, pair ({start_idx}, {end_idx}): {response.status_code}")
-        else:
-            logger.warning(f"POST failed for camera {camera_id + 1}, pair ({start_idx}, {end_idx}): Status {response.status_code}")
-    except Exception as e:
-        logger.error(f"Error sending POST for camera {camera_id + 1}, pair ({start_idx}, {end_idx}): {e}")
-        raise
+    pair_key = (camera_id, start_idx, end_idx)
+    retries = 0
+    while retries < max_retries:
+        try:
+            response = requests.post(api_url, json=data)
+            response_json = response.json()
+            if response_json.get("code") == 1000:
+                pair_manager.mark_post_sent(camera_id, start_idx, end_idx, True, success=True)
+                logger.info(
+                    f"POST sent for camera {camera_id + 1}, pair ({start_idx}, {end_idx}): "
+                    f"{response.status_code}, response: {response_json}"
+                )
+                return True
+            else:
+                retries += 1
+                pair_manager.retry_counts[pair_key] = retries
+                logger.warning(
+                    f"POST attempt {retries}/{max_retries} failed for camera {camera_id + 1}, "
+                    f"pair ({start_idx}, {end_idx}): Status {response.status_code}, response: {response_json}"
+                )
+                time.sleep(1)
+        except Exception as e:
+            retries += 1
+            pair_manager.retry_counts[pair_key] = retries
+            logger.error(
+                f"POST attempt {retries}/{max_retries} failed for camera {camera_id + 1}, "
+                f"pair ({start_idx}, {end_idx}): {e}"
+            )
+            time.sleep(1)
+    pair_manager.mark_post_sent(camera_id, start_idx, end_idx, False, success=False)
+    pair_manager.pair_states[pair_key]["timer"] = None  # Reset timer on failure
+    logger.error(
+        f"POST failed after {max_retries} retries for camera {camera_id + 1}, pair ({start_idx}, {end_idx})"
+    )
+    return False
 
 def delay_post_request(pair_manager, camera_id: int, start_idx: str, end_idx: str, api_url: str):
-    """Recheck state after 10s and send POST if unchanged."""
+    logger.info(f"Starting delay_post_request for camera {camera_id}, pair ({start_idx}, {end_idx})")
     try:
         start_state = pair_manager.state_manager.get_state(camera_id, f"starts_{start_idx}")
-        end_state = pair_manager.state_manager.get_state(camera_id, f"ends_{end_idx}")
-        logger.debug(f"Delay check for camera {camera_id}, pair ({start_idx}, {end_idx}): start={start_state}, end={end_state}")
-        
+        end_camera_id = pair_manager.end_task_camera_map.get(end_idx, camera_id)
+        end_state = pair_manager.state_manager.get_state(end_camera_id, f"ends_{end_idx}")
+        logger.debug(
+            f"Delay check for camera {camera_id}, pair ({start_idx}, {end_idx}): "
+            f"start={start_state}, end={end_state}, end_camera={end_camera_id}"
+        )
         if start_state is True and end_state is False:
-            threading.Thread(target=send_post_request, args=(pair_manager, camera_id, start_idx, end_idx, api_url)).start()
-            logger.info(f"POST request initiated for camera {camera_id}, pair ({start_idx}, {end_idx})")
+            success = send_post_request(pair_manager, camera_id, start_idx, end_idx, api_url)
+            if not success:
+                logger.info(
+                    f"POST failed for camera {camera_id}, pair ({start_idx}, {end_idx}), "
+                    f"releasing for next cycle"
+                )
+        else:
+            logger.info(
+                f"States changed before POST for camera {camera_id}, pair ({start_idx}, {end_idx}), "
+                f"releasing pair"
+            )
+            pair_manager.mark_post_sent(camera_id, start_idx, end_idx, False, success=False)
     except Exception as e:
         logger.error(f"Error in delay_post_request for camera {camera_id}, pair ({start_idx}, {end_idx}): {e}")
+        pair_manager.mark_post_sent(camera_id, start_idx, end_idx, False, success=False)
