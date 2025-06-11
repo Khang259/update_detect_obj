@@ -72,7 +72,6 @@ def send_post_request(pair_manager, camera_id: int, start_idx: str, end_idx: str
             )
             time.sleep(1)
     pair_manager.mark_post_sent(camera_id, start_idx, end_idx, False, success=False)
-    pair_manager.pair_states[pair_key]["timer"] = None  # Reset timer on failure
     logger.error(
         f"POST failed after {max_retries} retries for camera {camera_id + 1}, pair ({start_idx}, {end_idx})"
     )
