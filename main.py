@@ -4,18 +4,22 @@ from datetime import datetime
 import os
 import signal
 import cv2
-from camera_thread import CameraThread
-from state_manager import StateManager
-from pair_manager import PairManager
-from config import CAMERA_URLS, BOUNDING_BOXES, AVAILABLE_PAIRS, API_URL
+from src.camera_thread.camera_thread import CameraThread
+from src.state_manager.state_manager import StateManager
+from src.pair_management.pair_manager import PairManager
+from src.config import CAMERA_URLS, BOUNDING_BOXES, AVAILABLE_PAIRS, API_URL
 
 # Logging configuration
-os.makedirs("logs", exist_ok=True)
-log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 date_str = datetime.now().strftime("%Y%m%d")
-log_handler = logging.FileHandler(f"logs/log_main_{date_str}.log")
+
+os.makedirs("logs/logs_main", exist_ok=True)
+os.makedirs("logs/logs_errors/logs_errors_main", exist_ok=True)
+
+log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+log_handler = logging.FileHandler(f"logs/logs_main/log_main_{date_str}.log")
 log_handler.setFormatter(log_formatter)
-error_handler = logging.FileHandler("logs/log_error.log")
+
+error_handler = logging.FileHandler(f"logs/logs_errors/logs_errors_main/logs_errors_main_{date_str}.log")
 error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
@@ -60,7 +64,7 @@ def main():
 
         # Start pair manager
         pair_manager = PairManager(AVAILABLE_PAIRS, state_manager, API_URL)
-        pair_thread = threading.Thread(target=pair_manager.monitor_pairs)
+        pair_thread = threading.Thread(target=pair_manager.pair_monitor.monitor_pairs)
         pair_thread.start()
         logger.info("Started PairManager thread")
 

@@ -1,0 +1,39 @@
+update_detect_obj/
+├── src/
+│   ├── pair_management/
+│   │   ├── pair_state.py
+│   │   ├── pair_rotate.py
+│   │   ├── pair_montior.py
+│   │   ├── _init_.py
+│   │   └── pair_manager.py
+│   ├── camera_thread/
+│   │   ├── _init_.py
+│   │   └── camera_thread.py
+│   ├── post_request/
+│   │   ├── _init_.py
+│   │   ├── count.txt
+│   │   └── post_request.py
+│   ├── state_manager/
+│   │   ├── _init_.py
+│   │   └── state_manager.py
+│   └── utils/
+│       └── utils.py
+│   └── config.py
+├── logs/
+│   ├── logs_utils/
+│   ├── logs_post_request/
+│   ├── logs_state_manager/
+│   ├── logs_pair_management/
+│   └── logs_camera_thread/
+├── trash/
+├── docs/
+│   ├── requirements.txt
+│   └── README.md
+├── __pycache__/
+├── venv/
+│   ├── pyvenv.cfg
+│   ├── Scripts/
+│   └── Lib/
+├── internet_speed.py
+├── main.py
+├── rcs_server.py
