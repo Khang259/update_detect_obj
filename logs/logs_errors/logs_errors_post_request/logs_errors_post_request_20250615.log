@@ -1,0 +1,8 @@
+2025-06-15 13:17:01,525 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:17:01,525 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:19:30,236 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:19:30,361 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:36,036 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:36,160 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:59,330 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:36:09,371 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'

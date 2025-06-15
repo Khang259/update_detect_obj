@@ -1,0 +1,80 @@
+2025-06-15 13:17:01,524 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 13:17:01,525 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:17:01,525 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 13:17:01,525 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:19:30,235 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 13:19:30,236 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:19:30,361 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 13:19:30,361 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:36,036 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 13:35:36,036 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:36,160 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 13:35:36,160 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:35:59,329 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 13:35:59,330 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000126): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 13:36:09,371 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 13:36:09,371 - ERROR - Error in delay_post_request for camera 0, pair (10000124, 10000125): 'PairManager' object has no attribute 'state_manager'
+2025-06-15 14:18:47,523 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 14:18:47,551 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 14:18:47,645 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 14:18:47,672 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 14:19:37,623 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 14:19:37,631 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 14:19:37,746 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 14:19:37,755 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:03:04,600 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:03:04,616 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:03:04,720 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:03:04,747 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:03:18,123 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:03:18,141 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:03:18,241 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:03:18,247 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:04:00,412 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:04:00,438 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:04:01,306 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:04:01,313 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:09:10,642 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:09:10,649 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:09:11,581 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:09:11,590 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:14:20,945 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:14:20,952 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:14:21,837 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:14:21,842 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:19:31,225 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:19:31,233 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:19:32,111 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:19:32,116 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:24:41,470 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:24:41,477 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:24:42,354 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:24:42,381 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:29:51,714 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:29:51,722 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:29:52,578 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:29:52,601 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:35:01,998 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:35:02,012 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:35:02,892 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:35:02,920 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:40:12,169 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:40:12,178 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:40:13,147 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:40:13,174 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:45:22,476 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:45:22,488 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:45:23,431 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:45:23,456 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 15:46:41,011 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:46:41,025 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}, reset start_state for 10000124
+2025-06-15 15:46:41,133 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:46:41,161 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}, reset start_state for 10000124
+2025-06-15 15:47:04,346 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 15:47:04,354 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}, reset start_state for 10000124
+2025-06-15 15:47:04,454 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000126)
+2025-06-15 15:47:04,482 - INFO - POST sent for camera 1, pair (10000124, 10000126): 200, response: {'code': 1000, 'message': 'Success'}, reset start_state for 10000124
+2025-06-15 16:01:30,182 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 16:01:30,196 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-15 16:01:53,032 - INFO - Starting delay_post_request for camera 0, pair (10000124, 10000125)
+2025-06-15 16:01:53,041 - INFO - POST sent for camera 1, pair (10000124, 10000125): 200, response: {'code': 1000, 'message': 'Success'}

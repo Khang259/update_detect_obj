@@ -1,0 +1,135 @@
+2025-06-15 10:51:06,603 - INFO - Starting main program
+2025-06-15 10:51:09,390 - INFO - Started CameraThread for camera 0
+2025-06-15 10:51:09,394 - INFO - Started PairManager thread
+2025-06-15 10:51:18,867 - INFO - All threads completed
+2025-06-15 10:55:11,158 - INFO - Starting main program
+2025-06-15 10:55:13,474 - INFO - Started CameraThread for camera 0
+2025-06-15 10:55:13,476 - INFO - Started PairManager thread
+2025-06-15 10:55:38,090 - INFO - All threads completed
+2025-06-15 11:20:27,047 - INFO - Starting main program
+2025-06-15 11:20:28,836 - INFO - Started CameraThread for camera 0
+2025-06-15 11:20:28,839 - INFO - Started PairManager thread
+2025-06-15 11:22:29,903 - INFO - All threads completed
+2025-06-15 11:29:15,939 - INFO - Starting main program
+2025-06-15 11:29:17,464 - INFO - Started CameraThread for camera 0
+2025-06-15 11:29:17,465 - INFO - Started PairManager thread
+2025-06-15 11:37:20,340 - INFO - All threads completed
+2025-06-15 12:11:31,120 - INFO - Starting main program
+2025-06-15 12:11:33,908 - INFO - Started CameraThread for camera 0
+2025-06-15 12:11:33,911 - INFO - Started PairManager thread
+2025-06-15 12:15:22,176 - INFO - All threads completed
+2025-06-15 12:22:35,136 - INFO - Starting main program
+2025-06-15 12:22:37,410 - INFO - Started CameraThread for camera 0
+2025-06-15 12:22:37,412 - ERROR - Error in main: 'PairManager' object has no attribute 'lock'
+2025-06-15 12:22:37,412 - INFO - Shutdown triggered (signal: manual)
+2025-06-15 12:22:37,412 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:22:37,491 - INFO - All OpenCV windows closed
+2025-06-15 12:22:37,492 - INFO - Program terminated successfully
+2025-06-15 12:23:02,854 - INFO - Starting main program
+2025-06-15 12:23:05,427 - INFO - Started CameraThread for camera 0
+2025-06-15 12:23:05,430 - INFO - Started PairManager thread
+2025-06-15 12:23:18,955 - INFO - All threads completed
+2025-06-15 12:24:28,191 - INFO - Starting main program
+2025-06-15 12:24:29,460 - INFO - Started CameraThread for camera 0
+2025-06-15 12:24:29,462 - ERROR - Error in main: 'PairManager' object has no attribute 'lock'
+2025-06-15 12:24:29,463 - INFO - Shutdown triggered (signal: manual)
+2025-06-15 12:24:29,463 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:24:29,532 - INFO - All OpenCV windows closed
+2025-06-15 12:24:29,532 - INFO - Program terminated successfully
+2025-06-15 12:24:40,356 - INFO - Starting main program
+2025-06-15 12:24:41,455 - INFO - Started CameraThread for camera 0
+2025-06-15 12:24:41,458 - ERROR - Error in main: 'PairManager' object has no attribute 'lock'
+2025-06-15 12:24:41,458 - INFO - Shutdown triggered (signal: manual)
+2025-06-15 12:24:41,458 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:24:41,554 - INFO - All OpenCV windows closed
+2025-06-15 12:24:41,554 - INFO - Program terminated successfully
+2025-06-15 12:24:55,457 - INFO - Starting main program
+2025-06-15 12:24:57,455 - INFO - Started CameraThread for camera 0
+2025-06-15 12:24:57,458 - INFO - Started PairManager thread
+2025-06-15 12:25:00,743 - INFO - All threads completed
+2025-06-15 12:27:44,264 - INFO - Starting main program
+2025-06-15 12:27:46,295 - INFO - Started CameraThread for camera 0
+2025-06-15 12:27:46,298 - INFO - Started PairManager thread
+2025-06-15 12:32:51,094 - INFO - Starting main program
+2025-06-15 12:32:52,321 - INFO - Started CameraThread for camera 0
+2025-06-15 12:32:52,325 - INFO - Started PairManager thread
+2025-06-15 12:33:34,739 - INFO - Shutdown triggered (signal: 2)
+2025-06-15 12:33:34,739 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:33:34,763 - INFO - Stopping PairManager
+2025-06-15 12:33:36,773 - INFO - Shutdown triggered (signal: 2)
+2025-06-15 12:33:36,773 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:33:36,773 - INFO - Stopping PairManager
+2025-06-15 12:33:38,777 - INFO - Shutdown triggered (signal: 2)
+2025-06-15 12:33:38,777 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:33:38,777 - INFO - Stopping PairManager
+2025-06-15 12:33:40,777 - INFO - Shutdown triggered (signal: 2)
+2025-06-15 12:33:40,777 - INFO - Stopping CameraThread for camera 0
+2025-06-15 12:33:40,777 - INFO - Stopping PairManager
+2025-06-15 12:33:52,517 - INFO - Starting main program
+2025-06-15 12:33:54,342 - INFO - Started CameraThread for camera 0
+2025-06-15 12:33:54,344 - INFO - Started PairManager thread
+2025-06-15 12:34:41,883 - INFO - All threads completed
+2025-06-15 12:34:59,708 - INFO - Starting main program
+2025-06-15 12:35:02,409 - INFO - Started CameraThread for camera 0
+2025-06-15 12:35:02,446 - INFO - Started PairManager thread
+2025-06-15 12:35:36,677 - INFO - All threads completed
+2025-06-15 12:42:56,838 - INFO - Starting main program
+2025-06-15 12:42:59,540 - INFO - Started CameraThread for camera 0
+2025-06-15 12:42:59,545 - INFO - Started PairManager thread
+2025-06-15 12:45:45,081 - INFO - All threads completed
+2025-06-15 12:46:40,489 - INFO - Starting main program
+2025-06-15 12:46:41,889 - INFO - Started CameraThread for camera 0
+2025-06-15 12:46:41,890 - INFO - Started PairManager thread
+2025-06-15 12:46:50,211 - INFO - All threads completed
+2025-06-15 12:51:02,272 - INFO - Starting main program
+2025-06-15 12:51:04,056 - INFO - Started CameraThread for camera 0
+2025-06-15 12:51:04,058 - INFO - Started PairManager thread
+2025-06-15 12:51:13,553 - INFO - All threads completed
+2025-06-15 13:01:56,926 - INFO - Starting main program
+2025-06-15 13:01:58,224 - INFO - Started CameraThread for camera 0
+2025-06-15 13:01:58,229 - INFO - Started PairManager thread
+2025-06-15 13:02:04,712 - INFO - All threads completed
+2025-06-15 13:02:22,519 - INFO - Starting main program
+2025-06-15 13:02:24,253 - INFO - Started CameraThread for camera 0
+2025-06-15 13:02:24,255 - INFO - Started PairManager thread
+2025-06-15 13:02:29,318 - INFO - All threads completed
+2025-06-15 13:08:25,490 - INFO - Starting main program
+2025-06-15 13:08:26,626 - INFO - Started CameraThread for camera 0
+2025-06-15 13:08:26,628 - INFO - Started PairManager thread
+2025-06-15 13:08:32,825 - INFO - All threads completed
+2025-06-15 13:10:19,772 - INFO - Starting main program
+2025-06-15 13:10:22,715 - INFO - Started CameraThread for camera 0
+2025-06-15 13:10:22,719 - INFO - Started PairManager thread
+2025-06-15 13:11:32,690 - INFO - All threads completed
+2025-06-15 13:16:48,920 - INFO - Starting main program
+2025-06-15 13:16:51,213 - INFO - Started CameraThread for camera 0
+2025-06-15 13:16:51,233 - INFO - Started PairManager thread
+2025-06-15 13:17:26,087 - INFO - All threads completed
+2025-06-15 13:19:17,557 - INFO - Starting main program
+2025-06-15 13:19:19,203 - INFO - Started CameraThread for camera 0
+2025-06-15 13:19:19,205 - INFO - Started PairManager thread
+2025-06-15 13:33:32,039 - INFO - Starting main program
+2025-06-15 13:34:42,548 - INFO - Starting main program
+2025-06-15 13:34:45,410 - INFO - Started CameraThread for camera 0
+2025-06-15 13:34:45,414 - INFO - Started PairManager thread
+2025-06-15 13:34:53,585 - INFO - All threads completed
+2025-06-15 13:35:20,049 - INFO - Starting main program
+2025-06-15 13:35:21,467 - INFO - Started CameraThread for camera 0
+2025-06-15 13:35:21,473 - INFO - Started PairManager thread
+2025-06-15 13:36:05,849 - INFO - All threads completed
+2025-06-15 14:18:32,663 - INFO - Starting main program
+2025-06-15 14:18:33,891 - INFO - Started CameraThread for camera 0
+2025-06-15 14:18:33,895 - INFO - Started PairManager thread
+2025-06-15 14:19:56,292 - INFO - All threads completed
+2025-06-15 15:02:47,863 - INFO - Starting main program
+2025-06-15 15:02:50,757 - INFO - Started CameraThread for camera 0
+2025-06-15 15:02:50,761 - INFO - Started PairManager thread
+2025-06-15 15:04:09,219 - INFO - All threads completed
+2025-06-15 15:46:28,808 - INFO - Starting main program
+2025-06-15 15:46:30,847 - INFO - Started CameraThread for camera 0
+2025-06-15 15:46:30,854 - INFO - Started PairManager thread
+2025-06-15 15:47:23,453 - INFO - All threads completed
+2025-06-15 16:01:18,361 - INFO - Starting main program
+2025-06-15 16:01:20,010 - INFO - Started CameraThread for camera 0
+2025-06-15 16:01:20,014 - INFO - Started PairManager thread
+2025-06-15 16:02:04,652 - INFO - All threads completed

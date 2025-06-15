@@ -1,0 +1,138 @@
+2025-06-15 10:51:09,389 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 10:51:09,390 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 10:51:16,800 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 10:51:16,818 - INFO - Display window for camera 0 closed
+2025-06-15 10:51:16,833 - INFO - CameraThread for camera 0 stopped
+2025-06-15 10:55:13,472 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 10:55:13,472 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 10:55:36,059 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 10:55:36,084 - INFO - Display window for camera 0 closed
+2025-06-15 10:55:36,087 - INFO - CameraThread for camera 0 stopped
+2025-06-15 11:20:28,836 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 11:20:28,836 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 11:22:27,875 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 11:22:27,888 - INFO - Display window for camera 0 closed
+2025-06-15 11:22:27,891 - INFO - CameraThread for camera 0 stopped
+2025-06-15 11:29:17,463 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 11:29:17,464 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 11:37:18,291 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 11:37:18,303 - INFO - Display window for camera 0 closed
+2025-06-15 11:37:18,326 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:11:33,907 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:11:33,908 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:15:20,129 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:15:20,136 - INFO - Display window for camera 0 closed
+2025-06-15 12:15:20,161 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:22:37,404 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:22:37,409 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:22:37,488 - INFO - Display window for camera 0 closed
+2025-06-15 12:22:37,491 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:23:05,426 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:23:05,426 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:23:16,900 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:23:16,914 - INFO - Display window for camera 0 closed
+2025-06-15 12:23:16,943 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:24:29,459 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:24:29,460 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:24:29,521 - INFO - Display window for camera 0 closed
+2025-06-15 12:24:29,530 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:24:41,454 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:24:41,455 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:24:41,547 - INFO - Display window for camera 0 closed
+2025-06-15 12:24:41,553 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:24:57,455 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:24:57,455 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:24:58,687 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:24:58,704 - INFO - Display window for camera 0 closed
+2025-06-15 12:24:58,729 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:27:46,281 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:27:46,295 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:28:02,171 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:28:02,187 - INFO - Display window for camera 0 closed
+2025-06-15 12:28:02,213 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:32:52,321 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:32:52,321 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:33:34,757 - INFO - Display window for camera 0 closed
+2025-06-15 12:33:34,762 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:33:54,341 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:33:54,341 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:34:39,837 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:34:39,850 - INFO - Display window for camera 0 closed
+2025-06-15 12:34:39,871 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:35:02,408 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:35:02,408 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:35:34,603 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:35:34,624 - INFO - Display window for camera 0 closed
+2025-06-15 12:35:34,645 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:42:59,539 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:42:59,540 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:45:43,005 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:45:43,044 - INFO - Display window for camera 0 closed
+2025-06-15 12:45:43,055 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:46:41,888 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:46:41,888 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:46:48,157 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:46:48,182 - INFO - Display window for camera 0 closed
+2025-06-15 12:46:48,197 - INFO - CameraThread for camera 0 stopped
+2025-06-15 12:51:04,055 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 12:51:04,055 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 12:51:11,470 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 12:51:11,533 - INFO - Display window for camera 0 closed
+2025-06-15 12:51:11,538 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:01:58,223 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:01:58,224 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:02:02,648 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:02:02,675 - INFO - Display window for camera 0 closed
+2025-06-15 13:02:02,697 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:02:24,253 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:02:24,253 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:02:27,253 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:02:27,287 - INFO - Display window for camera 0 closed
+2025-06-15 13:02:27,307 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:08:26,625 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:08:26,625 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:08:30,759 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:08:30,781 - INFO - Display window for camera 0 closed
+2025-06-15 13:08:30,824 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:10:22,714 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:10:22,715 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:11:30,616 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:11:30,682 - INFO - Display window for camera 0 closed
+2025-06-15 13:11:30,684 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:16:51,212 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:16:51,213 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:17:24,022 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:17:24,063 - INFO - Display window for camera 0 closed
+2025-06-15 13:17:24,066 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:19:19,202 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:19:19,202 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:34:45,408 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:34:45,409 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:34:51,518 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:34:51,572 - INFO - Display window for camera 0 closed
+2025-06-15 13:34:51,575 - INFO - CameraThread for camera 0 stopped
+2025-06-15 13:35:21,467 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 13:35:21,467 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 13:36:03,793 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 13:36:03,812 - INFO - Display window for camera 0 closed
+2025-06-15 13:36:03,835 - INFO - CameraThread for camera 0 stopped
+2025-06-15 14:18:33,889 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 14:18:33,890 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 14:19:54,164 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 14:19:54,195 - INFO - Display window for camera 0 closed
+2025-06-15 14:19:54,197 - INFO - CameraThread for camera 0 stopped
+2025-06-15 15:02:50,756 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 15:02:50,756 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 15:04:07,175 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 15:04:07,187 - INFO - Display window for camera 0 closed
+2025-06-15 15:04:07,209 - INFO - CameraThread for camera 0 stopped
+2025-06-15 15:46:30,846 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 15:46:30,846 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 15:47:21,422 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 15:47:21,435 - INFO - Display window for camera 0 closed
+2025-06-15 15:47:21,450 - INFO - CameraThread for camera 0 stopped
+2025-06-15 16:01:20,008 - INFO - DisplayThread for camera 0 initialized
+2025-06-15 16:01:20,009 - INFO - CameraThread for camera 0 initialized with URL rtsp://admin:admin@192.168.1.42:1935
+2025-06-15 16:02:02,602 - INFO - Quit key 'q' detected for camera 0
+2025-06-15 16:02:02,616 - INFO - Display window for camera 0 closed
+2025-06-15 16:02:02,646 - INFO - CameraThread for camera 0 stopped

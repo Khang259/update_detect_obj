@@ -1,83 +1,84 @@
 import cv2
 import numpy as np
 
-# Biến toàn cục để lưu tọa độ bounding box
-drawing = False  # Trạng thái vẽ
-start_point = (-1, -1)  # Điểm bắt đầu
-end_point = (-1, -1)  # Điểm kết thúc
-boxes = []  # Danh sách lưu các bounding box
+class BoundingBoxDrawer:
+    def __init__(self, rtsp_url):
+        self.rtsp_url = rtsp_url
+        self.drawing = False
+        self.ix, self.iy = -1, -1
+        self.start_point = None
+        self.end_point = None
+        self.boxes = []
+        
+    def draw_rectangle(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            self.drawing = True
+            self.ix, self.iy = x, y
+            self.start_point = (x, y)
+            
+        elif event == cv2.EVENT_MOUSEMOVE:
+            if self.drawing:
+                self.end_point = (x, y)
+                
+        elif event == cv2.EVENT_LBUTTONUP:
+            self.drawing = False
+            self.end_point = (x, y)
+            self.boxes.append((self.ix, self.iy, x, y))
+            # In tọa độ ra terminal
+            print(f"Bounding Box: Start({self.ix}, {self.iy}), End({x}, {y})")
+            print(f"Width: {abs(x - self.ix)}, Height: {abs(y - self.iy)}")
 
-# Hàm xử lý sự kiện chuột
-def draw_bounding_box(event, x, y, flags, param):
-    global drawing, start_point, end_point, boxes
+    def run(self):
+        # Kết nối RTSP stream
+        cap = cv2.VideoCapture(self.rtsp_url)
+        
+        if not cap.isOpened():
+            print("Error: Cannot connect to RTSP stream")
+            return
 
-    if event == cv2.EVENT_LBUTTONDOWN:
-        drawing = True
-        start_point = (x, y)
+        # Tạo window và set mouse callback
+        cv2.namedWindow('RTSP Stream')
+        cv2.setMouseCallback('RTSP Stream', self.draw_rectangle)
 
-    elif event == cv2.EVENT_MOUSEMOVE:
-        if drawing:
-            end_point = (x, y)
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("Error: Cannot read frame")
+                break
 
-    elif event == cv2.EVENT_LBUTTONUP:
-        drawing = False
-        end_point = (x, y)
-        boxes.append((start_point, end_point))
-        # In tọa độ bounding box lên terminal
-        print(f"Bounding Box: Start Point = {start_point}, End Point = {end_point}")
+            # Tạo một bản sao của frame để vẽ
+            img = frame.copy()
 
-def main(rtsp_url):
-    # Mở stream RTSP
-    cap = cv2.VideoCapture(rtsp_url)
+            # Vẽ các bounding box đã lưu
+            for box in self.boxes:
+                cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2)
+
+            # Vẽ line đang vẽ
+            if self.drawing and self.start_point and self.end_point:
+                cv2.rectangle(img, self.start_point, self.end_point, (0, 0, 255), 2)
+
+            # Hiển thị frame
+            cv2.imshow('RTSP Stream', img)
+
+            # Thoát khi nhấn 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        # Giải phóng tài nguyên
+        cap.release()
+        cv2.destroyAllWindows()
+
+def main():
+    # Thay thế bằng RTSP URL của bạn
+    rtsp_url = "rtsp://admin:admin@192.168.1.42:1935"
     
-    if not cap.isOpened():
-        print("Không thể mở stream RTSP. Kiểm tra URL hoặc kết nối.")
+    # Kiểm tra URL hợp lệ
+    if not rtsp_url.startswith("rtsp://"):
+        print("Error: Invalid RTSP URL")
         return
 
-    # Tạo cửa sổ và gán hàm xử lý chuột
-    cv2.namedWindow("RTSP Stream")
-    cv2.setMouseCallback("RTSP Stream", draw_bounding_box)
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("Không thể nhận frame. Thoát...")
-            break
-
-        # Tạo một bản sao của frame để vẽ
-        frame_copy = frame.copy()
-
-        # Vẽ tất cả các bounding box đã lưu
-        for i, (start, end) in enumerate(boxes):
-            # Đảm bảo tọa độ hợp lệ
-            x1, y1 = start
-            x2, y2 = end
-            top_left = (min(x1, x2), min(y1, y2))
-            bottom_right = (max(x1, x2), max(y1, y2))
-            # Vẽ bounding box với màu ngẫu nhiên
-            color = (0, 255, 0)
-            cv2.rectangle(frame_copy, top_left, bottom_right, color, 2)
-            # Hiển thị tọa độ trên frame
-            cv2.putText(frame_copy, f"Box {i+1}: {top_left}, {bottom_right}", 
-                       (top_left[0], top_left[1] - 10), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-
-        # Vẽ bounding box đang được kéo
-        if drawing and start_point != (-1, -1) and end_point != (-1, -1):
-            cv2.rectangle(frame_copy, start_point, end_point, (0, 255, 0), 2)
-
-        # Hiển thị frame
-        cv2.imshow("RTSP Stream", frame_copy)
-
-        # Thoát khi nhấn 'q'
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Giải phóng tài nguyên
-    cap.release()
-    cv2.destroyAllWindows()
+    drawer = BoundingBoxDrawer(rtsp_url)
+    drawer.run()
 
 if __name__ == "__main__":
-    # Thay thế bằng URL RTSP của bạn
-    rtsp_url = "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101"
-    main(rtsp_url)
+    main()

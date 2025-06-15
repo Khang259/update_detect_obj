@@ -1,3 +1,9 @@
+"""
+Mục đích chính là triển khai một hệ thống phát hiện và quản lý các đối tượng (objects) trong video theo thời gian thực từ camera, 
+cụ thể là theo dõi trạng thái của các cặp "start" và "end" (bắt đầu và kết thúc) trong thời gian thực của các task path, 
+đồng thời gửi yêu cầu POST đến một API khi điều kiện phù hợp được đáp ứng
+"""
+
 update_detect_obj/
 ├── src/
 │   ├── pair_management/
@@ -25,7 +31,6 @@ update_detect_obj/
 │   ├── logs_state_manager/
 │   ├── logs_pair_management/
 │   └── logs_camera_thread/
-├── trash/
 ├── docs/
 │   ├── requirements.txt
 │   └── README.md
@@ -34,6 +39,5 @@ update_detect_obj/
 │   ├── pyvenv.cfg
 │   ├── Scripts/
 │   └── Lib/
-├── internet_speed.py
 ├── main.py
 ├── rcs_server.py

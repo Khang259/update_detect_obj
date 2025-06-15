@@ -19,7 +19,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("state_manager")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -40,26 +40,24 @@ class StateManager:
             logger.error(f"Error updating state for camera {camera_id}, task_path {task_path_id}: {e}")
             raise
 
-    def batch_update(self, updates: dict) -> None:
-        """Batch update states for multiple task paths."""
+    def batch_update(self, updates: dict):
+        logger.debug(f"Batch updating states: {updates}")
         try:
             with self.lock:
-                self.states.update(updates)
-                for (camera_id, task_path_id), state in updates.items():
-                    logger.info(f"Updated state for camera {camera_id}, {task_path_id}: {state}")
+                for key, value in updates.items():
+                    self.states[key] = value
                 logger.info(f"Batch updated states for camera {updates.keys()}")
         except Exception as e:
-            logger.error(f"Error in batch update: {e}")
+            logger.error(f"Error in batch_update: {e}", exc_info=True)
             raise
 
     def get_state(self, camera_id: int, task_path_id: str) -> bool:
-        """Get state for a camera and task path."""
-        logger.info(f"Calling get_state for camera {camera_id}, task_path {task_path_id}")
+        logger.debug(f"Retrieving state for camera {camera_id}, task_path {task_path_id}")
         try:
             with self.lock:
                 state = self.states.get((camera_id, task_path_id), False)
-                logger.info(f"Retrieved state for camera {camera_id}, task_path {task_path_id}: {state}")
+                logger.debug(f"Retrieved state: {state}")
                 return state
         except Exception as e:
-            logger.error(f"Error retrieving state for camera {camera_id}, task_path {task_path_id}: {e}")
+            logger.error(f"Error in get_state: {e}", exc_info=True)
             raise
