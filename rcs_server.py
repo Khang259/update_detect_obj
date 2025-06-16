@@ -25,7 +25,7 @@ async def receive_data(request: Request):
 
 if __name__ == "__main__":
     # Lấy IP nội bộ của máy host
-    hostname = "192.168.1.16"
+    hostname = "192.168.1.99"
 
     # Chạy server trực tiếp
     uvicorn.run("rcs_server:app", host=hostname, port=8000, reload=True)

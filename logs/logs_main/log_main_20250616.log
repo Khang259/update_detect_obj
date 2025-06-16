@@ -1,0 +1,54 @@
+2025-06-16 09:18:50,365 - INFO - Starting main program
+2025-06-16 09:18:54,209 - INFO - Started CameraThread for camera 0
+2025-06-16 09:18:58,025 - INFO - Started CameraThread for camera 1
+2025-06-16 09:19:01,890 - INFO - Started CameraThread for camera 2
+2025-06-16 09:19:01,896 - INFO - Started PairManager thread
+2025-06-16 09:26:38,117 - INFO - All threads completed
+2025-06-16 09:50:47,713 - INFO - Starting main program
+2025-06-16 09:50:51,549 - INFO - Started CameraThread for camera 0
+2025-06-16 09:50:55,415 - INFO - Started CameraThread for camera 1
+2025-06-16 09:50:59,243 - INFO - Started CameraThread for camera 2
+2025-06-16 09:50:59,249 - INFO - Started PairManager thread
+2025-06-16 09:51:51,762 - INFO - All threads completed
+2025-06-16 09:53:45,060 - INFO - Starting main program
+2025-06-16 09:53:48,938 - INFO - Started CameraThread for camera 0
+2025-06-16 09:53:52,799 - INFO - Started CameraThread for camera 1
+2025-06-16 09:53:56,633 - INFO - Started CameraThread for camera 2
+2025-06-16 09:53:56,639 - INFO - Started PairManager thread
+2025-06-16 09:55:10,302 - INFO - All threads completed
+2025-06-16 10:36:35,715 - INFO - Starting main program
+2025-06-16 10:36:39,546 - INFO - Started CameraThread for camera 0
+2025-06-16 10:36:43,370 - INFO - Started CameraThread for camera 1
+2025-06-16 10:36:47,243 - INFO - Started CameraThread for camera 2
+2025-06-16 10:36:47,247 - INFO - Started PairManager thread
+2025-06-16 10:38:00,741 - INFO - All threads completed
+2025-06-16 10:53:53,954 - INFO - Starting main program
+2025-06-16 10:53:57,658 - INFO - Started CameraThread for camera 0
+2025-06-16 10:54:01,523 - INFO - Started CameraThread for camera 1
+2025-06-16 10:54:05,353 - INFO - Started CameraThread for camera 2
+2025-06-16 10:54:05,358 - INFO - Started PairManager thread
+2025-06-16 12:51:42,437 - INFO - All threads completed
+2025-06-16 13:41:21,207 - INFO - Starting main program
+2025-06-16 13:41:25,017 - INFO - Started CameraThread for camera 0
+2025-06-16 13:41:28,860 - INFO - Started CameraThread for camera 1
+2025-06-16 13:41:32,743 - INFO - Started CameraThread for camera 2
+2025-06-16 13:41:32,748 - INFO - Started PairManager thread
+2025-06-16 13:46:38,704 - INFO - All threads completed
+2025-06-16 14:02:48,970 - INFO - Starting main program
+2025-06-16 14:02:52,815 - INFO - Started CameraThread for camera 0
+2025-06-16 14:02:56,666 - INFO - Started CameraThread for camera 1
+2025-06-16 14:03:00,344 - INFO - Started CameraThread for camera 2
+2025-06-16 14:03:00,349 - INFO - Started PairManager thread
+2025-06-16 14:03:53,860 - INFO - All threads completed
+2025-06-16 14:38:48,217 - INFO - Starting main program
+2025-06-16 14:38:52,023 - INFO - Started CameraThread for camera 0
+2025-06-16 14:38:55,867 - INFO - Started CameraThread for camera 1
+2025-06-16 14:38:59,592 - INFO - Started CameraThread for camera 2
+2025-06-16 14:38:59,596 - INFO - Started PairManager thread
+2025-06-16 14:40:24,345 - INFO - All threads completed
+2025-06-16 16:08:23,858 - INFO - Starting main program
+2025-06-16 16:08:27,683 - INFO - Started CameraThread for camera 0
+2025-06-16 16:08:31,580 - INFO - Started CameraThread for camera 1
+2025-06-16 16:08:35,439 - INFO - Started CameraThread for camera 2
+2025-06-16 16:08:35,444 - INFO - Started PairManager thread
+2025-06-16 16:09:40,251 - INFO - All threads completed

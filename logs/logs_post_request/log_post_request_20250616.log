@@ -1,0 +1,118 @@
+2025-06-16 09:19:12,151 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000171)
+2025-06-16 09:19:12,163 - INFO - POST sent for camera 1, pair (10000174, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:12,295 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000171)
+2025-06-16 09:19:12,303 - INFO - POST sent for camera 1, pair (10000175, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:12,435 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000171)
+2025-06-16 09:19:12,443 - INFO - POST sent for camera 1, pair (10000176, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:12,574 - INFO - Starting delay_post_request for camera 0, pair (10000177, 10000171)
+2025-06-16 09:19:12,582 - INFO - POST sent for camera 1, pair (10000177, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:12,722 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000171)
+2025-06-16 09:19:12,728 - INFO - Starting delay_post_request for camera 0, pair (10000179, 10000171)
+2025-06-16 09:19:12,730 - INFO - POST sent for camera 1, pair (10000178, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:12,736 - INFO - POST sent for camera 1, pair (10000179, 10000171): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:29,695 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 09:19:29,704 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:29,839 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 09:19:29,846 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:29,984 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 09:19:29,991 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:30,123 - INFO - Starting delay_post_request for camera 0, pair (10000177, 10000170)
+2025-06-16 09:19:30,129 - INFO - POST sent for camera 1, pair (10000177, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:30,263 - INFO - Starting delay_post_request for camera 0, pair (10000179, 10000170)
+2025-06-16 09:19:30,269 - INFO - POST sent for camera 1, pair (10000179, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:30,526 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:19:30,537 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:41,079 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:19:41,087 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:19:52,381 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:19:52,399 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:20:03,724 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:20:03,731 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:20:45,712 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:20:45,719 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:21:06,297 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:21:06,306 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:21:28,317 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:21:28,324 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:22:24,529 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:22:24,536 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:23:30,726 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 09:23:30,732 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:23:42,128 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:23:42,135 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:35,906 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:24:35,912 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:40,092 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 09:24:40,098 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:40,230 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 09:24:40,237 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:40,369 - INFO - Starting delay_post_request for camera 0, pair (10000177, 10000170)
+2025-06-16 09:24:40,376 - INFO - POST sent for camera 1, pair (10000177, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:40,516 - INFO - Starting delay_post_request for camera 0, pair (10000179, 10000170)
+2025-06-16 09:24:40,523 - INFO - POST sent for camera 1, pair (10000179, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:24:47,527 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:24:47,534 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:25:08,703 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:25:08,709 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:25:39,959 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:25:39,970 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:26:11,814 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:26:11,821 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:26:45,264 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000141)
+2025-06-16 09:26:45,270 - INFO - POST sent for camera 1, pair (10000176, 10000141): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:26:45,405 - INFO - Starting delay_post_request for camera 0, pair (10000177, 10000141)
+2025-06-16 09:26:45,411 - INFO - POST sent for camera 1, pair (10000177, 10000141): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:26:45,548 - INFO - Starting delay_post_request for camera 0, pair (10000179, 10000141)
+2025-06-16 09:26:45,554 - INFO - POST sent for camera 1, pair (10000179, 10000141): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:06,766 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 09:54:06,779 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:06,920 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 09:54:06,928 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:07,061 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 09:54:07,068 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 09:54:07,068 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:07,075 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:07,205 - INFO - Starting delay_post_request for camera 0, pair (10000177, 10000170)
+2025-06-16 09:54:07,212 - INFO - POST sent for camera 1, pair (10000177, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:07,343 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 09:54:07,350 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:07,490 - INFO - Starting delay_post_request for camera 0, pair (10000179, 10000170)
+2025-06-16 09:54:07,497 - INFO - POST sent for camera 1, pair (10000179, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:41,511 - INFO - Starting delay_post_request for camera 1, pair (10000146, 10000164)
+2025-06-16 09:54:41,518 - INFO - POST sent for camera 2, pair (10000146, 10000164): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 09:54:42,578 - INFO - Starting delay_post_request for camera 1, pair (10000234, 10000164)
+2025-06-16 09:54:42,585 - INFO - POST sent for camera 2, pair (10000234, 10000164): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:36:57,297 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 10:36:57,308 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:37:07,527 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 10:37:07,535 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:37:17,685 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 10:37:17,692 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:37:27,873 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 10:37:27,881 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:37:38,158 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 10:37:38,164 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:42:07,603 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 10:42:07,610 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:42:17,854 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 10:42:17,860 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:42:28,112 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 10:42:28,119 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:42:38,329 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 10:42:38,336 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:42:48,585 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 10:42:48,592 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:47:17,793 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 10:47:17,800 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:47:28,106 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 10:47:28,113 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:47:38,448 - INFO - Starting delay_post_request for camera 0, pair (10000175, 10000170)
+2025-06-16 10:47:38,455 - INFO - POST sent for camera 1, pair (10000175, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:47:48,620 - INFO - Starting delay_post_request for camera 0, pair (10000176, 10000170)
+2025-06-16 10:47:48,635 - INFO - POST sent for camera 1, pair (10000176, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:47:58,882 - INFO - Starting delay_post_request for camera 0, pair (10000178, 10000170)
+2025-06-16 10:47:58,889 - INFO - POST sent for camera 1, pair (10000178, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:52:28,126 - INFO - Starting delay_post_request for camera 0, pair (10000173, 10000170)
+2025-06-16 10:52:28,134 - INFO - POST sent for camera 1, pair (10000173, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
+2025-06-16 10:52:38,380 - INFO - Starting delay_post_request for camera 0, pair (10000174, 10000170)
+2025-06-16 10:52:38,386 - INFO - POST sent for camera 1, pair (10000174, 10000170): 200, response: {'code': 1000, 'message': 'Success'}
