@@ -6,7 +6,7 @@ from queue import Queue
 from datetime import datetime
 import os
 from src.utils.utils import detect_lines, draw_lines_and_text
-from src.config import BBOX_TO_TASKPATH
+from config.config import BBOX_TO_TASKPATH
 
 # Logging configuration
 date_str = datetime.now().strftime("%Y%m%d")

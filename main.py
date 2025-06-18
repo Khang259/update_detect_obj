@@ -7,7 +7,7 @@ import cv2
 from src.camera_thread.camera_thread import CameraThread
 from src.state_manager.state_manager import StateManager
 from src.pair_management.pair_manager import PairManager
-from src.config import CAMERA_URLS, BOUNDING_BOXES, AVAILABLE_PAIRS, API_URL
+from config.config import CAMERA_URLS, BOUNDING_BOXES, AVAILABLE_PAIRS, API_URL
 
 # Logging configuration
 date_str = datetime.now().strftime("%Y%m%d")

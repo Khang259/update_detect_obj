@@ -2,6 +2,12 @@
 Mục đích chính là triển khai một hệ thống phát hiện và quản lý các đối tượng (objects) trong video theo thời gian thực từ camera, 
 cụ thể là theo dõi trạng thái của các cặp "start" và "end" (bắt đầu và kết thúc) trong thời gian thực của các task path, 
 đồng thời gửi yêu cầu POST đến một API khi điều kiện phù hợp được đáp ứng
+
+Triển khai giải pháp queue sử dụng thread pool để đảm bảo tính scalable cho hệ thống với số camera dự kiến 200 (mỗi camera 5-6 end_idx, tức ~1000-1200 end_idx). 
+Cập nhật các file cụ thể (pair_monitor.py, pair_lock.py) và thêm các file mới (queue_manager.py, camera_manager.py, camera_config.py) 
+để tích hợp queue toàn cục, thread pool, và quản lý camera hiệu quả. Giải pháp sẽ tránh race condition, giảm nguy cơ deadlock, và hỗ trợ mở rộng với 200 camera, 
+đồng thời giữ tương thích với mục đích chính: theo dõi trạng thái start và end thời gian thực, ghép cặp độc nhất, và gửi POST khi điều kiện phù hợp.
+
 """
 
 update_detect_obj/
@@ -39,5 +45,51 @@ update_detect_obj/
 │   ├── pyvenv.cfg
 │   ├── Scripts/
 │   └── Lib/
+├── main.py
+├── rcs_server.py
+
+
+
+#Cấu trúc đề xuất mang tính scalability
+
+update_detect_obj/
+├── src/
+│   ├── pair_management/
+│   │   ├── pair_state.py
+│   │   ├── pair_rotate.py
+│   │   ├── pair_monitor.py
+│   │   ├── pair_lock.py
+│   │   ├── queue_manager.py  # NEW: Quản lý queue toàn cục
+│   │   ├── __init__.py
+│   │   └── pair_manager.py
+│   ├── camera_thread/
+│   │   ├── camera_thread.py
+│   │   ├── camera_manager.py  # NEW: Quản lý CameraThread
+│   │   ├── async_camera.py    # OPTIONAL: Camera bất đồng bộ
+│   │   └── __init__.py
+│   ├── post_request/
+│   │   ├── __init__.py
+│   │   ├── count.txt
+│   │   └── post_request.py
+│   ├── state_manager/
+│   │   ├── __init__.py
+│   │   └── state_manager.py
+│   ├── config/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── camera_config.py  # NEW: Cấu hình động cho camera
+│   └── utils/
+│       └── utils.py
+├── logs/
+│   ├── logs_utils/
+│   ├── logs_post_request/
+│   ├── logs_state_manager/
+│   ├── logs_pair_management/
+│   └── logs_camera_thread/
+├── docs/
+│   ├── requirements.txt
+│   └── README.md
+├── __pycache__/
+├── venv/
 ├── main.py
 ├── rcs_server.py
