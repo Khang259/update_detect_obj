@@ -6,7 +6,7 @@ from src.camera_thread.camera_thread import CameraThread
 logger = logging.getLogger("camera_thread")
 
 class CameraManager:
-    def __init__(self, state_manager, max_workers=200):
+    def __init__(self, state_manager, max_workers=3):
         self.state_manager = state_manager
         self.cameras = {}  # camera_id -> CameraThread
         self.executor = ThreadPoolExecutor(max_workers=max_workers)  # 200 workers for 200 cameras

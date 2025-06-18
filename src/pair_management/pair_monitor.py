@@ -214,7 +214,7 @@ class PairMonitor:
         self.pair_post_manager = pair_post_manager
         self.queue_manager = queue_manager
         self.shutdown_event = threading.Event()
-        self.executor = ThreadPoolExecutor(max_workers=20)  # 20 threads for 200 cameras (~10 cameras/thread)
+        self.executor = ThreadPoolExecutor(max_workers=1)  # 20 threads for 200 cameras (~10 cameras/thread)
         self.threads = []
         logger.debug("PairMonitor initialized")
 
