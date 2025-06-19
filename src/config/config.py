@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger("config")
+
 CAMERA_URLS = [
     "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
     "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
@@ -101,37 +105,25 @@ API_URL = "http://192.168.1.99:8000/ics/taskOrder/addTask"
 
 FRAME_SIZE = {"width": 1280, "height": 720}
 
-def validate_config():
+def validate_config(available_pairs):
     """Validate configuration data."""
-    if len(CAMERA_URLS) != len(BOUNDING_BOXES):
-        raise ValueError("Mismatch between CAMERA_URLS and BOUNDING_BOXES")
-    if len(CAMERA_URLS) != len(AVAILABLE_PAIRS):
-        raise ValueError("Mismatch between CAMERA_URLS and AVAILABLE_PAIRS")
-    
-    # Validate bounding boxes
-    for camera_id, bboxes in enumerate(BOUNDING_BOXES):
-        for task_type in ["starts", "ends"]:
-            for x1, y1, x2, y2 in bboxes[task_type]:
-                if not (0 <= x1 < x2 <= FRAME_SIZE["width"] and 0 <= y1 < y2 <= FRAME_SIZE["height"]):
-                    raise ValueError(f"Invalid bounding box [{x1},{y1},{x2},{y2}] for camera {camera_id}")
-                bbox_key = f"{x1}_{y1}_{x2}_{y2}"
-                if bbox_key not in BBOX_TO_TASKPATH:
-                    raise ValueError(f"Bounding box {bbox_key} not mapped in BBOX_TO_TASKPATH")
-    
-    # Validate AVAILABLE_PAIRS
-    for camera_id, pairs in enumerate(AVAILABLE_PAIRS):
-        for task_type in ["starts", "ends"]:
-            for task_path in pairs[task_type]:
-                if task_path not in BBOX_TO_TASKPATH.values():
-                    raise ValueError(f"Task path {task_path} in AVAILABLE_PAIRS[{camera_id}][{task_type}] not found in BBOX_TO_TASKPATH")
-                if task_type == "starts" and task_path not in START_TASK_PATHS:
-                    raise ValueError(f"Start task path {task_path} in AVAILABLE_PAIRS not in START_TASK_PATHS")
-                if task_type == "ends" and task_path not in END_TASK_PATHS:
-                    raise ValueError(f"End task path {task_path} in AVAILABLE_PAIRS not in END_TASK_PATHS")
-    
-    # Validate task paths
-    for task_path in START_TASK_PATHS + END_TASK_PATHS:
-        if task_path not in BBOX_TO_TASKPATH.values():
-            raise ValueError(f"Task path {task_path} not found in BBOX_TO_TASKPATH")
+    try:
+        # Validate AVAILABLE_PAIRS
+        for camera_id, pairs in enumerate(available_pairs):
+            for task_type in ["starts", "ends"]:
+                for task_path in pairs[task_type]:
+                    if task_path not in BBOX_TO_TASKPATH.values():
+                        raise ValueError(f"Task path {task_path} in AVAILABLE_PAIRS[{camera_id}][{task_type}] not found in BBOX_TO_TASKPATH")
+                    if task_type == "starts" and task_path not in START_TASK_PATHS:
+                        raise ValueError(f"Start task path {task_path} in AVAILABLE_PAIRS not in START_TASK_PATHS")
+                    if task_type == "ends" and task_path not in END_TASK_PATHS:
+                        raise ValueError(f"End task path {task_path} in AVAILABLE_PAIRS not in END_TASK_PATHS")
 
-validate_config()
+        # Validate task paths
+        for task_path in START_TASK_PATHS + END_TASK_PATHS:
+            if task_path not in BBOX_TO_TASKPATH.values():
+                raise ValueError(f"Task path {task_path} not found in BBOX_TO_TASKPATH")
+        logger.info("Configuration validated successfully")
+    except Exception as e:
+        logger.error(f"Configuration validation failed: {e}")
+        raise

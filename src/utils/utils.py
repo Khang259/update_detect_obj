@@ -43,7 +43,7 @@ def draw_lines_and_text(frame: np.ndarray, bbox: list, has_lines: bool):
         x1,y1, x2, y2 = bbox
         color = (0, 255, 0) if has_lines else (0, 0, 255)
         cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-        label = "Co hang" if has_lines else "Khong hang"
+        label = "Detect cargo" if has_lines else "None"
         cv2.putText(frame, label, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         logger.debug(f"Drew bounding box {bbox} with label '{label}'")
     except Exception as e:

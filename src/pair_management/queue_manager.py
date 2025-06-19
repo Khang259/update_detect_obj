@@ -1,51 +1,55 @@
 import logging
-from queue import Queue
-import threading
-from time import time
+import threading  # Thêm import threading
+from queue import Queue, Empty
+from collections import deque
 
-logger = logging.getLogger("pair_manager")
+logger = logging.getLogger("queue_manager")
 
 class QueueManager:
     def __init__(self):
         self.end_queue = Queue()
-        self.lock = threading.Lock()
-        self.last_refresh = {}  # camera_id -> timestamp
-        self.seen_end_idx = set()  # Tránh trùng lặp
+        self.camera_queues = {}
+        self.lock = threading.Lock()  # Sửa từ Queue() thành threading.Lock()
         logger.debug("QueueManager initialized")
 
-    def add_end_idx(self, camera_id, end_idx):
-        """Thêm end_idx vào queue, tránh trùng lặp"""
-        with self.lock:
-            key = (camera_id, end_idx)
-            if key not in self.seen_end_idx:
-                self.end_queue.put(key)
-                self.seen_end_idx.add(key)
-                logger.debug(f"Added to queue: {key}")
-            else:
-                logger.debug(f"Skipped duplicate: {key}")
+    def add_end_idx(self, camera_id: int, end_idx: str):
+        """Thêm end_idx vào hàng đợi toàn cục và camera queue"""
+        try:
+            with self.lock:
+                if camera_id not in self.camera_queues:
+                    self.camera_queues[camera_id] = deque()
+                if end_idx not in self.camera_queues[camera_id]:
+                    self.camera_queues[camera_id].append(end_idx)
+                    self.end_queue.put((camera_id, end_idx))
+                    logger.debug(f"Added to queue: ({camera_id}, {end_idx})")
+        except Exception as e:
+            logger.error(f"Error adding end_idx {end_idx} for camera {camera_id}: {e}")
+            raise
 
     def get_end_idx(self):
-        """Lấy end_idx từ queue"""
+        """Lấy end_idx từ hàng đợi toàn cục"""
         try:
-            key = self.end_queue.get_nowait()
             with self.lock:
-                self.seen_end_idx.discard(key)
-            logger.debug(f"Retrieved from queue: {key}")
-            return key
-        except Queue.Empty:
-            logger.debug("Queue empty")
+                key = self.end_queue.get_nowait()
+                logger.debug(f"Retrieved from queue: {key}")
+                return key
+        except Empty:
+            logger.debug("Global queue is empty")
             return None
+        except Exception as e:
+            logger.error(f"Error getting end_idx: {e}")
+            raise
 
-    def refresh_queue(self, camera_id, valid_end_list):
-        """Làm mới queue cho camera"""
-        with self.lock:
-            current_time = time()
-            if camera_id not in self.last_refresh or current_time - self.last_refresh[camera_id] >= 60:
-                for end_idx in valid_end_list:
-                    key = (camera_id, end_idx)
-                    if key not in self.seen_end_idx:
-                        self.end_queue.put(key)
-                        self.seen_end_idx.add(key)
-                        logger.debug(f"Refreshed queue with: {key}")
-                self.last_refresh[camera_id] = current_time
-                logger.info(f"Queue refreshed for camera {camera_id}")
+    def refresh_queue(self, camera_id: int, valid_end_list: list):
+        """Làm mới camera queue với valid_end_list"""
+        try:
+            with self.lock:
+                if camera_id in self.camera_queues:
+                    self.camera_queues[camera_id] = deque(valid_end_list)
+                    logger.debug(f"Queue refreshed for camera {camera_id}: {list(self.camera_queues[camera_id])}")
+                else:
+                    self.camera_queues[camera_id] = deque(valid_end_list)
+                    logger.debug(f"Queue initialized for camera {camera_id}: {list(self.camera_queues[camera_id])}")
+        except Exception as e:
+            logger.error(f"Error refreshing queue for camera {camera_id}: {e}")
+            raise
