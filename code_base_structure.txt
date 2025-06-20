@@ -93,3 +93,7 @@ update_detect_obj/
 ├── venv/
 ├── main.py
 ├── rcs_server.py
+
+// Luồng state_task_path 
+camera_thread.py -> state_queue -> state_manager.py -> queue_manager_queue -> queue_manager.py -> pair_monitor_queue -> pair_monitor.py.
+

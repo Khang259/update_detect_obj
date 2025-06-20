@@ -1,236 +1,122 @@
 import logging
 import time
 import threading
-import traceback
-from concurrent.futures import ThreadPoolExecutor
+from queue import Queue
+from datetime import datetime
+import os
+import queue
+from src.config.config import AVAILABLE_PAIRS
+from src.state_manager.state_manager import StateManager
+from src.post_request.post_request import PostRequestManager
+
+date_str = datetime.now().strftime("%Y%m%d")
+os.makedirs("logs/logs_pair_manager", exist_ok=True)
+os.makedirs("logs/logs_errors/logs_errors_pair_manager", exist_ok=True)
+
+log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+log_handler = logging.FileHandler(f"logs/logs_pair_manager/log_pair_manager_{date_str}.log")
+log_handler.setFormatter(log_formatter)
+error_handler = logging.FileHandler(f"logs/logs_errors/logs_errors_pair_manager/logs_errors_pair_manager_{date_str}.log")
+error_handler.setFormatter(log_formatter)
+error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("pair_manager")
-
-class PairMonitorThread(threading.Thread):
-    def __init__(self, camera_ids, pair_manager, pair_state_manager, pair_rotate_manager, pair_lock_manager, pair_post_manager, queue_manager, shutdown_event):
-        super().__init__()
-        self.camera_ids = camera_ids
-        self.pair_manager = pair_manager
-        self.pair_state_manager = pair_state_manager
-        self.pair_rotate_manager = pair_rotate_manager
-        self.pair_lock_manager = pair_lock_manager
-        self.pair_post_manager = pair_post_manager
-        self.queue_manager = queue_manager
-        self.shutdown_event = shutdown_event
-        self.running = True
-        logger.debug(f"PairMonitorThread initialized for cameras {camera_ids}")
-
-    def run(self):
-        logger.info(f"Starting PairMonitorThread for cameras {self.camera_ids}") 
-        thread_name = threading.current_thread().name
-        print(f"Thread {thread_name} started for cameras")
-        last_queue_refresh = {cid: 0 for cid in self.camera_ids}
-        while self.running and not self.shutdown_event.is_set():
-            try:
-                start_time = time.time()
-                for camera_id in self.camera_ids:
-                    logger.debug(f"Processing camera {camera_id}")
-                    try:
-                        with self.pair_manager.locks[camera_id]:
-                            start_queue = self.pair_state_manager.start_queues[camera_id]
-                            end_queue = self.pair_state_manager.end_queues[camera_id]
-                            logger.debug(f"Camera {camera_id}: start_queue={list(start_queue)}, end_queue={list(end_queue)}")
-                            valid_end_list = []
-                            valid_start_list = []
-
-                            if end_queue:
-                                for end_idx in list(end_queue):
-                                    if any(e == end_idx for _, _, e in self.pair_state_manager.sent_pairs):
-                                        continue
-                                    if end_idx not in self.pair_lock_manager.active_end_paths:
-                                        end_camera_id = self.pair_state_manager.end_task_camera_map.get(end_idx, camera_id)
-                                        end_state = self.pair_state_manager.state_manager.get_state(end_camera_id, f"ends_{end_idx}")
-                                        logger.debug(f"End path {end_idx} (camera {end_camera_id}): end_state={end_state}")
-                                        if end_state is False:
-                                            valid_end_list.append(end_idx)
-                                            self.queue_manager.add_end_idx(camera_id, end_idx)
-
-                            if start_queue:
-                                for start_idx in list(start_queue):
-                                    if start_idx not in self.pair_lock_manager.active_start_paths:
-                                        start_state = self.pair_state_manager.state_manager.get_state(camera_id, f"starts_{start_idx}")
-                                        logger.debug(f"Start path {start_idx}: start_state={start_state}")
-                                        if start_state is True and not any(
-                                            (cid, sidx, _) in self.pair_state_manager.sent_pairs
-                                            for cid, sidx, _ in self.pair_state_manager.pair_states
-                                            if sidx == start_idx
-                                        ):
-                                            valid_start_list.append(start_idx)
-
-                            logger.debug(f"Camera {camera_id}: valid_end_list={valid_end_list}, valid_start_list={valid_start_list}")
-
-                            available_pairs = []
-                            available_pairs_config = self.pair_state_manager.available_pairs[camera_id]
-                            while True:
-                                end_item = self.queue_manager.get_end_idx()
-                                if not end_item:
-                                    break
-                                cid, end_idx = end_item
-                                if cid != camera_id:
-                                    continue
-                                for start_idx in valid_start_list:
-                                    if (
-                                        start_idx in available_pairs_config["starts"] and
-                                        end_idx in available_pairs_config["ends"]
-                                    ):
-                                        pair_key = (camera_id, start_idx, end_idx)
-                                        print(f"Checking pair {pair_key} for locking")
-                                        with self.pair_lock_manager.lock:
-                                            if (
-                                                pair_key in self.pair_state_manager.pair_states and
-                                                pair_key not in self.pair_lock_manager.locked_pairs and
-                                                pair_key not in self.pair_state_manager.sent_pairs
-                                            ):
-                                                print(f"Attempting to lock pair {pair_key}")
-                                                if self.pair_lock_manager.lock_pair(start_idx, end_idx, camera_id):
-                                                    print("1")
-                                                    available_pairs.append(pair_key)
-                                                    logger.debug(f"Locked pair {pair_key}")
-                                                    break
-                                if available_pairs:
-                                    break
-                            for pair_key in list(self.pair_state_manager.pair_states.keys()):
-                                cid, sidx, eidx = pair_key
-                                if cid != camera_id:
-                                    continue
-                                if sidx not in start_queue or eidx not in end_queue:
-                                    continue
-                                info = self.pair_state_manager.pair_states[pair_key]
-                                start_state = self.pair_state_manager.state_manager.get_state(cid, f"starts_{sidx}")
-                                end_camera_id = self.pair_state_manager.end_task_camera_map.get(eidx, cid)
-                                end_state = self.pair_state_manager.state_manager.get_state(end_camera_id, f"ends_{eidx}")
-                                elapsed = time.time() - info["timer"] if info["timer"] else 0
-                                logger.debug(
-                                    f"Checking pair ({cid}, {sidx}, {eidx}): start={start_state}, end={end_state}, "
-                                    f"timer={elapsed:.2f}s, in_sent_pairs={pair_key in self.pair_state_manager.sent_pairs}"
-                                )
-
-                                if pair_key in available_pairs and info["timer"] is None and pair_key not in self.pair_state_manager.sent_pairs:
-                                    if start_state is True and end_state is False:
-                                        info["timer"] = time.time()
-                                        print(f"Starting timer for pair {pair_key} with start_state True and end_state False")
-                                        logger.info(f"Timer started for camera {cid}, pair ({sidx}, {eidx})")
-                                    else:
-                                        self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_invalid_state=True)
-
-                                elif (
-                                    start_state is True and
-                                    end_state is False and
-                                    info["timer"] and
-                                    time.time() - info["timer"] >= 10 and
-                                    pair_key not in self.pair_state_manager.sent_pairs
-                                ):
-                                    with self.pair_lock_manager.lock:
-                                        if any(e == eidx for _, _, e in self.pair_state_manager.sent_pairs):
-                                            self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_invalid_state=True)
-                                            continue
-                                        self.pair_post_manager.trigger_post(cid, sidx, eidx)
-                                        self.pair_state_manager.sent_pairs[pair_key] = time.time()
-                                        info["timer"] = None
-                                        logger.info(f"Triggered POST for camera {cid}, pair ({sidx}, {eidx})")
-                                        if start_queue and sidx == start_queue[0]:
-                                            start_queue.rotate(-1)
-                                        if end_queue and eidx == end_queue[0]:
-                                            end_queue.rotate(-1)
-
-                                elif pair_key in self.pair_state_manager.sent_pairs:
-                                    sent_time = self.pair_state_manager.sent_pairs[pair_key]
-                                    if start_state is False:
-                                        self.pair_lock_manager.release_pair(sidx, eidx, cid, release_start_only=True)
-                                    if end_state is True or time.time() - sent_time >= 300:
-                                        self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_invalid_state=end_state is True)
-                                        del self.pair_state_manager.sent_pairs[pair_key]
-                                        if start_queue and sidx == start_queue[0]:
-                                            start_queue.rotate(-1)
-                                        if end_queue and eidx == end_queue[0]:
-                                            end_queue.rotate(-1)
-
-                                elif (
-                                    (start_state is False or end_state is True) and
-                                    pair_key not in self.pair_state_manager.sent_pairs
-                                ):
-                                    if info["timer"]:
-                                        logger.info(f"Resetting timer for pair ({cid}, {sidx}, {eidx})")
-                                    self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_invalid_state=True)
-                                    info["timer"] = None
-                                    if start_queue and sidx == start_queue[0]:
-                                        start_queue.rotate(-1)
-                                    if end_queue and eidx == end_queue[0]:
-                                        end_queue.rotate(-1)
-
-                                elif (
-                                    info["timer"] and
-                                    time.time() - info["timer"] >= 300 and
-                                    pair_key not in self.pair_state_manager.sent_pairs
-                                ):
-                                    logger.warning(f"Resetting stuck timer for pair ({cid}, {sidx}, {eidx})")
-                                    self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_timeout=True)
-                                    info["timer"] = None
-                                    if start_queue and sidx == start_queue[0]:
-                                        start_queue.rotate(-1)
-                                    if end_queue and eidx == end_queue[0]:
-                                        end_queue.rotate(-1)
-
-                            current_time = time.time()
-                            if not start_queue or not end_queue or current_time - last_queue_refresh[camera_id] >= 60:
-                                logger.info(f"Repopulating queues for camera {camera_id}")
-                                saved_timers = {(cid, sidx, eidx): info["timer"] for (cid, sidx, eidx), info in self.pair_state_manager.pair_states.items() if cid == camera_id}
-                                self.pair_rotate_manager.rotate_queues(camera_id)
-                                for (cid, sidx, eidx), timer in saved_timers.items():
-                                    if (cid, sidx, eidx) in self.pair_state_manager.pair_states and timer is not None:
-                                        self.pair_state_manager.pair_states[(cid, sidx, eidx)]["timer"] = timer
-                                last_queue_refresh[camera_id] = current_time
-                                self.queue_manager.refresh_queue(camera_id, valid_end_list)
-                                for (cid, sidx, eidx) in list(self.pair_state_manager.pair_states.keys()):
-                                    if cid == camera_id and (cid, sidx, eidx) not in self.pair_state_manager.sent_pairs:
-                                        self.pair_lock_manager.release_pair(sidx, eidx, cid, due_to_invalid_state=True)
-
-                    except Exception as e:
-                        logger.error(f"Error processing camera {camera_id}: {e}", exc_info=True)
-                        print(f"Error processing camera {camera_id}: {e}")  # Thêm print để debug
-
-                logger.debug(f"Iteration took {time.time() - start_time:.2f}s")
-                time.sleep(0.1)
-            except Exception as e:
-                logger.error(f"Error in PairMonitorThread: {e}", exc_info=True)
-                print(f"Error in PairMonitorThread: {e}")  # Thêm print để debug
-                time.sleep(1)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(log_handler)
+logger.addHandler(error_handler)
 
 class PairMonitor:
-    def __init__(self, pair_manager, pair_state_manager, pair_rotate_manager, pair_lock_manager, pair_post_manager, queue_manager):
-        self.pair_manager = pair_manager
-        self.pair_state_manager = pair_state_manager
-        self.pair_rotate_manager = pair_rotate_manager
-        self.pair_lock_manager = pair_lock_manager
-        self.pair_post_manager = pair_post_manager
-        self.queue_manager = queue_manager
+    def __init__(self, state_manager: StateManager, post_request_manager: PostRequestManager, pair_monitor_queue: Queue, sent_pairs_queue: Queue):
+        self.state_manager = state_manager
+        self.post_request_manager = post_request_manager
+        self.pair_monitor_queue = pair_monitor_queue
+        self.sent_pairs_queue = sent_pairs_queue
+        self.queue_available_pair = []  # (start_idx, end_idx, timestamp, mark_post_sent)
         self.shutdown_event = threading.Event()
-        self.executor = ThreadPoolExecutor(max_workers=1)
-        self.threads = []
+        self.thread = threading.Thread(target=self.run)
         logger.debug("PairMonitor initialized")
 
     def start_monitoring(self):
-        num_cameras = len(self.pair_state_manager.available_pairs)
-        cameras_per_thread = max(1, num_cameras)
-        for i in range(0, num_cameras, cameras_per_thread):
-            camera_ids = list(range(i, min(i + cameras_per_thread, num_cameras)))
-            thread = PairMonitorThread(
-                camera_ids, self.pair_manager, self.pair_state_manager, self.pair_rotate_manager,
-                self.pair_lock_manager, self.pair_post_manager, self.queue_manager, self.shutdown_event
-            )
-            self.threads.append(thread)
-            self.executor.submit(thread.run)
-            logger.info(f"Started PairMonitorThread for cameras {camera_ids}")
-        return self.threads
+        self.thread.start()
+        logger.info("Started PairMonitor")
+
+    def run(self):
+        while not self.shutdown_event.is_set():
+            print("PairMonitor is running...")
+            try:
+                # Xử lý các cặp đã gửi POST
+                while not self.sent_pairs_queue.empty():
+                    start_idx, end_idx, success = self.sent_pairs_queue.get()
+                    for i, pair in enumerate(self.queue_available_pair):
+                        if pair[:2] == (start_idx, end_idx):
+                            self.queue_available_pair[i] = (start_idx, end_idx, pair[2], success)
+                            logger.debug(f"Updated pair ({start_idx}, {end_idx}) with mark_post_sent={success}")
+
+                # Xử lý hàng đợi từ queue_manager
+                try:
+                    queues = self.pair_monitor_queue.get_nowait()  # Non-blocking
+                    start_queue = queues["start_queue"]
+                    end_queue = queues["end_queue"]
+                    logger.debug(f"Received queues: start={start_queue}, end={end_queue}")
+
+                    # Tạo các cặp mới theo AVAILABLE_PAIRS
+                    new_pairs = []
+                    for pairs in AVAILABLE_PAIRS:
+                        valid_starts = [s[1] for s in start_queue if s[1] in pairs["starts"]]
+                        valid_ends = [e[1] for e in end_queue if e[1] in pairs["ends"]]
+                        logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
+
+                        temp_starts = valid_starts.copy()
+                        temp_ends = valid_ends.copy()
+                        for start_idx, end_idx in zip(temp_starts, temp_ends):
+                            pair = (start_idx, end_idx, time.time(), False)
+                            logger.debug(f"Checking pair: {pair[:2]}")
+                            if pair[:2] not in [p[:2] for p in self.queue_available_pair]:
+                                new_pairs.append(pair)
+                                logger.debug(f"Added pair: {pair[:2]}")
+                                if start_idx in valid_starts:
+                                    valid_starts.remove(start_idx)
+                                if end_idx in valid_ends:
+                                    valid_ends.remove(end_idx)
+
+                    self.queue_available_pair.extend(new_pairs)
+                except queue.Empty:
+                    pass  # Không có dữ liệu mới, tiếp tục kiểm tra cặp hiện có
+
+                # Kiểm tra thời gian và trạng thái
+                to_remove = []
+                for pair in self.queue_available_pair[:]:
+                    start_idx, end_idx, timestamp, mark_post_sent = pair
+                    start_camera_id = next((cid for cid, tid in start_queue if tid == start_idx), None)
+                    end_camera_id = next((cid for cid, tid in end_queue if tid == end_idx), None)
+                    start_state = self.state_manager.states.get((start_camera_id, f"starts_{start_idx}"), False) if start_camera_id is not None else False
+                    end_state = self.state_manager.states.get((end_camera_id, f"ends_{end_idx}"), False) if end_camera_id is not None else False
+                    elapsed = time.time() - timestamp
+                    logger.debug(f"Pair: ({start_idx}, {end_idx}), start_state: {start_state}, end_state: {end_state}, elapsed: {elapsed:.2f}s, mark_post_sent: {mark_post_sent}")
+
+                    if start_state and not end_state and elapsed >= 15 and not mark_post_sent:
+                        logger.info(f"Pair ({start_idx}, {end_idx}) is ready to send POST")
+                        data = f"{start_idx},{end_idx}"
+                        self.post_request_manager.trigger_post(data)
+                        logger.info(f"Triggered POST for pair: ({start_idx}, {end_idx})")
+                    elif end_state:
+                        to_remove.append(pair)
+                        logger.debug(f"Removing pair due to end_state=True: {pair[:2]}")
+                    elif not start_state:
+                        to_remove.append(pair)
+                        logger.debug(f"Removing pair due to start_state=False: {pair[:2]}")
+
+                # Xóa các cặp không hợp lệ
+                for pair in to_remove:
+                    self.queue_available_pair.remove(pair)
+                    logger.info(f"Removed pair: {pair[:2]}")
+
+            except Exception as e:
+                logger.error(f"Error in PairMonitor: {e}")
+
+            time.sleep(0.1)  # Tránh CPU overload
 
     def stop_monitoring(self):
         self.shutdown_event.set()
-        for thread in self.threads:
-            thread.running = False
-        self.executor.shutdown(wait=True)
+        self.thread.join()
         logger.info("PairMonitor stopped")
