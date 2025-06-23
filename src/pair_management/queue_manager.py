@@ -19,7 +19,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("queue_manager")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -70,7 +70,7 @@ class QueueManager:
                             logger.debug(f"Removed from end_queue: {(camera_id, task_id)}")
 
                 self.pair_monitor_queue.put({"start_queue": list(self.start_queue), "end_queue": list(self.end_queue)})
-                logger.debug(f"Sent to pair_monitor_queue: {{'start_queue': {list(self.start_queue)}, 'end_queue': {list(self.end_queue)}}}")
+                logger.info(f"Sent to pair_monitor_queue: {{'start_queue': {list(self.start_queue)}, 'end_queue': {list(self.end_queue)}}}")
                 
             except queue.Empty:
                 logger.debug("queue_manager_queue is empty, waiting for updates")

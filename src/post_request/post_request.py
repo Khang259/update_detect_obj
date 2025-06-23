@@ -71,7 +71,7 @@ class PostRequestManager:
                     logger.info(f"Marked pair ({start_idx}, {end_idx}) as sent")
                 else:
                     self.sent_pairs_queue.put((start_idx, end_idx, False))
-                    logger.info(f"Failed to send pair ({start_idx}, {end_idx})")
+                    logger.error(f"Failed to send pair ({start_idx}, {end_idx})")
             except queue.Empty:
                 continue
             except Exception as e:
@@ -93,13 +93,13 @@ class PostRequestManager:
                 response = requests.post(self.api_url, json=data, timeout=10)
                 response_json = response.json()
                 if response_json.get("code") == 1000:
-                    logger.info(f"POST sent for pair {pair}: {response.status_code}, response: {response_json}")
+                    logger.info(f"POST sent for pair {pair}: {response.status_code}")
                     return True
                 else:
                     retries += 1
                     logger.warning(
                         f"POST attempt {retries}/{max_retries} failed for pair {pair}: "
-                        f"Status {response.status_code}, response: {response_json}"
+                        f"Status {response.status_code}"
                     )
                     time.sleep(1)
             except Exception as e:

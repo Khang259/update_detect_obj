@@ -1,0 +1,64 @@
+Chạy liên tục trong vòng lặp
+    Tạo biến thời gian hiện tại để kiểm soát việc in ra hàm đang chạy 
+    Try:
+        Gán từng phần tử trong tuple sent_pairs_queue
+        Chạy vòng lặp với các cặp đã được gửi trong sent_pairs_queue
+            Kiểm tra xem các phần tử start và end có bằng với phần tử trong Pair
+                Gán từng phần tử start /end /success trong queue_available_pair
+
+        Try:
+            tạo biến hàng đợi gán vào pair_monitor_queue lấy theo thứ tự FIFO bằng get_nowait()
+            lấy giá trị trong queue có key là start_queue gán vào start_queue
+            lấy giá trị trong queue có key là end_queue gán vào end_queue
+
+            tạo list là new_pairs
+            duyệt các cặp trong AVAILABLE_PAIRS
+                duyệt các phần tử nằm trong start_queue
+                    nếu key phần tử =  start trong pairs    
+                        gán vào valid_starts
+
+                duyệt các phần tử nằm trong end_queue
+                    nếu key phần tử =  end trong pảir
+                        gán vào valid_ends
+
+                sao chép các đối tượng valid_ends, valid_starts
+                Duyệt các start_idx, end_idx trong danh sách  được gộp bởi biến tạm của valid_ends và valid_starts
+                    Gán vào tuple pair với form là start, end, time_post, mark_post_sent
+                    Duyệt lần lượt 2 phần tử đầu tiên trong queue_available_pair
+                        So sánh 2 phần tử đầu trong pảir kiểm tra xem có trúng không 
+                            Nếu không thì add pair vào new_pairs
+                            Nếu điểm start_idx nằm trong valid_starts
+                                remove điểm start khỏi valid_starts
+                            Nếu điểm end_idx khởi valid_ends
+                                remove điểm end khỏi valid_ends
+        except Nếu queue rỗng:
+            bỏ qua 
+
+        duyệt từng phần tử trong queue_available_pair
+            gán start_idx, end_idx, time, mark_post_sent với pair
+            Duyệt từng phần tử cid và tid trong start_queue và kiểm tra tid == start_idx
+                Nếu có thì start_camera_id = cid
+            Tương tự cho end_camera_id = cid
+            Nếu start_camera_id != None
+                Từ biến state_manager.states lấy state của start_idx&&start_camera_id gán vào start_state, nếu không lấy được trả về False
+            else
+                False
+            Nếu end_camera_id != None
+                Từ biến state_manager.states lấy state của end_idx&&start_camera_id gán vào end_state, nếu không lấy được trả về False
+            else
+                False
+            đặt thời gian cho cặp 
+
+            Nếu state start = True và end_state != False và thời gian >15 và mark_post_send != True:
+                gọi hàm post_request_manager.trigger_post( "truyền tham số 'data' " )
+                đánh dấu mark_post_sent = True
+            elif start = False && end =  True
+                thêm pair vào biến to_remove
+
+        duyệt các cặp trong biến to_remove
+            remove pair trong queue_available_pair
+
+    except Exception as e:
+        in ra logger
+
+

@@ -17,7 +17,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("state_manager")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -36,19 +36,16 @@ class StateManager:
             try:
                 updates = self.state_queue.get(timeout=1)
                 logger.debug(f"Received updates from state_queue (id: {id(self.state_queue)}): {updates}")
-                logger.debug(f"state_queue size after get: {self.state_queue.qsize()}")
                 
                 for key, value in updates.items():
                     prev_state = self.states.get(key, None)
                     self.states[key] = value
-                    logger.debug(f"Updated state for {key}: {value} (previous: {prev_state})")
+                    logger.info(f"Updated state for {key}: {value} (previous: {prev_state})")
                     
                     if key not in processed_keys:
                         self.queue_manager_queue.put((key, value))
                         processed_keys.add(key)
                         logger.debug(f"Sent state to queue_manager_queue: {key} -> {value}")
-                
-                logger.info(f"Processed batch updates for {updates.keys()}")
                 processed_keys.clear()
                 
             except queue.Empty:
