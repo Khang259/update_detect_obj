@@ -55,26 +55,47 @@ class PairMonitor:
                 # Xử lý các cặp đã gửi POST
                 while not self.sent_pairs_queue.empty():
                     start_idx, end_idx, success = self.sent_pairs_queue.get()
-                    for i, pair in enumerate(self.queue_available_pair):
+                    for i, pair in enumerate(self.queue_available_pair[:]):  # Sao chép để tránh lỗi khi xóa
                         if pair[:2] == (start_idx, end_idx):
                             self.queue_available_pair[i] = (start_idx, end_idx, pair[2], success)
                             logger.debug(f"Updated pair ({start_idx}, {end_idx}) with mark_post_sent={success}, timestamp={pair[2]}")
                             if success:
                                 self.sent_pairs.add((start_idx, end_idx))
                                 logger.debug(f"Added ({start_idx}, {end_idx}) to sent_pairs")
+                                # Kiểm tra trạng thái trước khi discard
+                                start_camera_id = None
+                                end_camera_id = None
+                                try:
+                                    if self.pair_monitor_queue.queue:
+                                        start_camera_id = next((cid for cid, tid in self.pair_monitor_queue.queue[0]["start_queue"] if tid == start_idx), None)
+                                        end_camera_id = next((cid for cid, tid in self.pair_monitor_queue.queue[0]["end_queue"] if tid == end_idx), None)
+                                except Exception as e:
+                                    logger.error(f"Error accessing pair_monitor_queue: {e}")
+                                start_state = self.state_manager.states.get((start_camera_id, f"starts_{start_idx}"), False) if start_camera_id is not None else False
+                                end_state = self.state_manager.states.get((end_camera_id, f"ends_{end_idx}"), False) if end_camera_id is not None else False
+                                if not start_state:
+                                    self.used_starts.discard(start_idx)
+                                    logger.debug(f"Removed ({start_idx}) from used_starts due to start_state={start_state}")
+                                if end_state:
+                                    self.used_ends.discard(end_idx)
+                                    logger.debug(f"Removed ({end_idx}) from used_ends due to end_state={end_state}")
+                                # Xóa cặp ngay sau POST thành công
+                                self.queue_available_pair = [p for p in self.queue_available_pair if p[:2] != (start_idx, end_idx)]
+                                logger.debug(f"Removed pair ({start_idx}, {end_idx}) from queue_available_pair after POST success")
 
                 # Xử lý hàng đợi từ queue_manager
                 try:
                     queues = self.pair_monitor_queue.get_nowait()
                     start_queue = queues["start_queue"]
-                    logger.info(f"start_queue: {start_queue}")
                     end_queue = queues["end_queue"]
-                    logger.debug(f"Received queues: start={start_queue}, end={end_queue}")
+                    logger.info(f"Start queue task_ids: {[s[1] for s in start_queue]}")
+                    logger.info(f"End queue task_ids: {[e[1] for e in end_queue]}")
 
                     new_pairs = []
                     for pairs in AVAILABLE_PAIRS:
                         valid_starts = [s[1] for s in start_queue if s[1] in pairs["starts"] and s[1] not in self.used_starts]
                         valid_ends = [e[1] for e in end_queue if e[1] in pairs["ends"] and e[1] not in self.used_ends]
+                        logger.debug(f"used_starts / ends: {self.used_starts}, {self.used_ends}")
                         logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
 
                         for start_idx, end_idx in zip(valid_starts, valid_ends):
@@ -96,8 +117,8 @@ class PairMonitor:
                 to_remove = []
                 for i, pair in enumerate(self.queue_available_pair[:]):
                     start_idx, end_idx, timestamp, mark_post_sent = pair
-                    start_camera_id = next((cid for cid, tid in start_queue if tid == start_idx), None)
-                    end_camera_id = next((cid for cid, tid in end_queue if tid == end_idx), None)
+                    start_camera_id = next((cid for cid, tid in start_queue if tid == start_idx), None) if 'start_queue' in locals() else None
+                    end_camera_id = next((cid for cid, tid in end_queue if tid == end_idx), None) if 'end_queue' in locals() else None
                     start_state = self.state_manager.states.get((start_camera_id, f"starts_{start_idx}"), False) if start_camera_id is not None else False
                     end_state = self.state_manager.states.get((end_camera_id, f"ends_{end_idx}"), False) if end_camera_id is not None else False
                     elapsed = time.time() - timestamp
@@ -110,20 +131,12 @@ class PairMonitor:
                         logger.info(f"Triggered POST for pair: ({start_idx}, {end_idx})")
                         to_remove.append(pair)
                         logger.debug(f"Marked for removal after POST: ({start_idx}, {end_idx})")
-                    elif end_state and not start_state:  # Chỉ xóa khỏi used_starts/used_ends khi start_state=False và end_state=True
-                        to_remove.append(pair)
-                        self.used_starts.discard(start_idx)
-                        self.used_ends.discard(end_idx)
-                        logger.debug(f"Removed ({start_idx}, {end_idx}) from used_starts and used_ends due to start_state=False and end_state=True")
                     elif end_state or not start_state:
                         to_remove.append(pair)
                         logger.debug(f"Removing pair due to end_state={end_state} or start_state={start_state}: {pair[:2]}")
 
-                # Xóa các cặp không hợp lệ
-                logger.debug(f"Before removal: queue_available_pair={[(p[0], p[1]) for p in self.queue_available_pair]}")
                 self.queue_available_pair = [p for p in self.queue_available_pair if p not in to_remove]
-                logger.debug(f"After removal: queue_available_pair={[(p[0], p[1]) for p in self.queue_available_pair]}")
-
+                
             except Exception as e:
                 logger.error(f"Error in PairMonitor: {e}")
 
