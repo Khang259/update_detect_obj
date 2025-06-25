@@ -101,7 +101,7 @@ AVAILABLE_PAIRS = [
     # }
 ]
 
-API_URL = "http://192.168.1.169:7000/ics/taskOrder/addTask"
+API_URL = "http://192.168.1.99:7000/ics/taskOrder/addTask"
 
 FRAME_SIZE = {"width": 1280, "height": 720}
 

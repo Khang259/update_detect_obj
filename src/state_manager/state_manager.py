@@ -40,7 +40,7 @@ class StateManager:
                 for key, value in updates.items():
                     prev_state = self.states.get(key, None)
                     self.states[key] = value
-                    logger.info(f"Updated state for {key}: {value} (previous: {prev_state})")
+                    logger.debug(f"Updated state for {key}: {value} (previous: {prev_state})")
                     
                     if key not in processed_keys:
                         self.queue_manager_queue.put((key, value))
