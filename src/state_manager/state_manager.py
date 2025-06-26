@@ -45,7 +45,7 @@ class StateManager:
                     if key not in processed_keys:
                         self.queue_manager_queue.put((key, value))
                         processed_keys.add(key)
-                        logger.debug(f"Sent state to queue_manager_queue: {key} -> {value}")
+                        logger.info(f"Sent state to queue_manager_queue: {key} -> {value}")
                 processed_keys.clear()
                 
             except queue.Empty:

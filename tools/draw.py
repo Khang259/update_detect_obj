@@ -70,7 +70,8 @@ class BoundingBoxDrawer:
 
 def main():
     # Thay thế bằng RTSP URL của bạn
-    rtsp_url = "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101"
+    # rtsp_url = "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101"
+    rtsp_url = "rtsp://admin:admin@192.168.0.115:1935"
     
     # Kiểm tra URL hợp lệ
     if not rtsp_url.startswith("rtsp://"):

@@ -51,23 +51,23 @@ class QueueManager:
 
                 if task_type == "starts" and task_id in START_TASK_PATHS:
                     if state:
-                        if (camera_id, task_id) not in self.start_queue:
-                            self.start_queue.append((camera_id, task_id))
-                            logger.debug(f"Added to start_queue: {(camera_id, task_id)}")
+                        if (task_id) not in self.start_queue:
+                            self.start_queue.append((task_id))
+                            logger.debug(f"Added to start_queue: {(task_id)}")
                     else:
-                        if (camera_id, task_id) in self.start_queue:
-                            self.start_queue.remove((camera_id, task_id))
-                            logger.debug(f"Removed from start_queue: {(camera_id, task_id)}")
+                        if (task_id) in self.start_queue:
+                            self.start_queue.remove((task_id))
+                            logger.debug(f"Removed from start_queue: {(task_id)}")
 
                 if task_type == "ends" and task_id in END_TASK_PATHS:
                     if not state:
-                        if (camera_id, task_id) not in self.end_queue:
-                            self.end_queue.append((camera_id, task_id))
-                            logger.debug(f"Added to end_queue: {(camera_id, task_id)}")
+                        if (task_id) not in self.end_queue:
+                            self.end_queue.append((task_id))
+                            logger.debug(f"Added to end_queue: {(task_id)}")
                     else:
-                        if (camera_id, task_id) in self.end_queue:
-                            self.end_queue.remove((camera_id, task_id))
-                            logger.debug(f"Removed from end_queue: {(camera_id, task_id)}")
+                        if (task_id) in self.end_queue:
+                            self.end_queue.remove((task_id))
+                            logger.debug(f"Removed from end_queue: {(task_id)}")
 
                 self.pair_monitor_queue.put({"start_queue": list(self.start_queue), "end_queue": list(self.end_queue)})
                 logger.debug(f"Sent to pair_monitor_queue: {{'start_queue': {list(self.start_queue)}, 'end_queue': {list(self.end_queue)}}}")

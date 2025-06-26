@@ -2,12 +2,12 @@ import logging
 import threading
 import signal
 import os
-import time
 from datetime import datetime
 from queue import Queue
 from src.camera_thread.camera_thread import CameraThread
 from src.pair_management.pair_manager import PairManager
 from src.config.config import CAMERA_URLS, BOUNDING_BOXES, API_URL, validate_config, BBOX_TO_TASKPATH
+
 
 date_str = datetime.now().strftime("%Y%m%d")
 os.makedirs("logs/logs_main", exist_ok=True)
