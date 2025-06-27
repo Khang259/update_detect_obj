@@ -45,6 +45,7 @@ class PostRequestManager:
         self.post_queue = Queue()
         self.thread = threading.Thread(target=self.process_posts)
         self.running = True
+        self.last_post_time = 0  # Track the time of the last POST
         logger.debug("PostRequestManager initialized")
 
     def start(self):
@@ -64,8 +65,19 @@ class PostRequestManager:
         while self.running:
             try:
                 data = self.post_queue.get(timeout=1)
-                start_idx, end_idx = data.split(',')  # Tách data để gửi lại sent_pairs_queue
+                start_idx, end_idx = data.split(',')
+                current_time = time.time()
+                elapsed_since_last_post = current_time - self.last_post_time
+
+                # Wait until 1 second has passed since the last POST
+                if elapsed_since_last_post < 1:
+                    time.sleep(1 - elapsed_since_last_post)
+
+                start_time = time.time()
                 success = self.send_post_request(data)
+                self.last_post_time = time.time()  # Update last post time
+                elapsed = self.last_post_time - start_time
+                logger.debug(f"Processed POST for pair ({start_idx}, {end_idx}) in {elapsed:.2f}s")
                 if success:
                     self.sent_pairs_queue.put((start_idx, end_idx, True))
                     logger.info(f"Marked pair ({start_idx}, {end_idx}) as sent")
@@ -82,7 +94,7 @@ class PostRequestManager:
         data = {
             "modelProcessCode": "checking_camera_work",
             "fromSystem": "ICS",
-            "orderId": f"thaod_1_2_{count}",
+            "orderId": f"thaod_1_3_{count}",
             "taskOrderDetail": [
                 {"taskPath": f"{pair}"}
             ]
