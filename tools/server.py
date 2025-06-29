@@ -27,4 +27,4 @@ if __name__ == "__main__":
     # Lấy IP nội bộ của máy host
 
     # Chạy server trực tiếp
-    uvicorn.run("server:app", host="192.168.0.108", port=7000, reload=True)
+    uvicorn.run("server:app", host="192.168.1.37", port=7000, reload=True)
