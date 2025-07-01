@@ -6,7 +6,7 @@ CAMERA_URLS = [
     # "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
     # "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
     # "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101"
-    "rtsp://admin:admin@192.168.1.18:8554/live"
+    "rtsp://admin:admin@192.168.0.113:8554/live"
 ]
 
 BOUNDING_BOXES = [
@@ -102,7 +102,7 @@ AVAILABLE_PAIRS = [
 ]
 
 # API_URL = "http://192.168.1.99:7000/ics/taskOrder/addTask"
-API_URL = "http://192.168.1.37:7000/ics/taskOrder/addTask"
+API_URL = "http://192.168.0.108:7000/ics/taskOrder/addTask"
 
 FRAME_SIZE = {"width": 1280, "height": 720}
 

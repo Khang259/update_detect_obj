@@ -29,7 +29,6 @@ class QueueManager:
         self.end_queue = deque()
         self.queue_manager_queue = queue_manager_queue
         self.pair_monitor_queue = pair_monitor_queue
-        self.prev_states = {}
         logger.info(f"QueueManager initialized with queue_manager_queue id: {id(self.queue_manager_queue)}")
 
     def process_state_updates(self):
@@ -41,13 +40,6 @@ class QueueManager:
 
                 task_id = task_path_id.split('_')[1]
                 task_type = task_path_id.split('_')[0]
-
-                prev_state = self.prev_states.get((camera_id, task_path_id), None)
-                if prev_state == state:
-                    logger.debug(f"Skipping unchanged state: {(camera_id, task_path_id)} -> {state}")
-                    continue
-
-                self.prev_states[(camera_id, task_path_id)] = state
 
                 if task_type == "starts" and task_id in START_TASK_PATHS:
                     if state:

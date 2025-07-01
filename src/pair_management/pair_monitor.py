@@ -14,15 +14,11 @@ os.makedirs("logs/logs_pair_manager", exist_ok=True)
 os.makedirs("logs/logs_errors/logs_errors_pair_manager", exist_ok=True)
 
 log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-log_handler = logging.FileHandler(f"logs/logs_pair_manager/log_pair_manager_{date_str}.log", encoding='utf-8', mode='a')
+log_handler = logging.FileHandler(f"logs/logs_pair_manager/log_pair_manager_{date_str}.log", encoding='utf-8')
 log_handler.setFormatter(log_formatter)
-log_handler.setLevel(logging.DEBUG)  # Đảm bảo handler ghi cả DEBUG
-log_handler.flush = lambda: log_handler.stream.flush()  # Thêm flush sau mỗi lần ghi
-
-error_handler = logging.FileHandler(f"logs/logs_errors/logs_errors_pair_manager/logs_errors_pair_manager_{date_str}.log", encoding='utf-8', mode='a')
+error_handler = logging.FileHandler(f"logs/logs_errors/logs_errors_pair_manager/logs_errors_pair_manager_{date_str}.log", encoding='utf-8')
 error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
-error_handler.flush = lambda: error_handler.stream.flush()  # Thêm flush cho error handler
 
 logger = logging.getLogger("pair_manager")
 logger.setLevel(logging.DEBUG)
@@ -35,19 +31,19 @@ class PairMonitor:
         self.post_request_manager = post_request_manager
         self.pair_monitor_queue = pair_monitor_queue
         self.sent_pairs_queue = sent_pairs_queue
-        self.queue_available_pair = []  # (start_idx, end_idx, timestamp, mark_post_sent, initial_start_state, initial_end_state)
+        self.queue_available_pair = []
         self.used_starts = set()
         self.used_ends = set()
+        self.pending_pairs = {}  # Store pending pairs with their timestamps
+        self.sent_pairs_end_state_timestamps = {}  # Store timestamps when end_state becomes True
         self.shutdown_event = threading.Event()
         self.thread = threading.Thread(target=self.run)
         self.last_print_time = 0
         logger.debug("PairMonitor initialized")
-        log_handler.flush()  # Flush ngay sau khi ghi log khởi tạo
 
     def start_monitoring(self):
         self.thread.start()
         logger.info("Started PairMonitor")
-        log_handler.flush()
 
     def run(self):
         while not self.shutdown_event.is_set():
@@ -62,79 +58,92 @@ class PairMonitor:
                     start_queue = queues["start_queue"]
                     end_queue = queues["end_queue"]
                     logger.debug(f"Received queues: start={[tid for tid in start_queue]}, end={[tid for tid in end_queue]}")
-                    log_handler.flush()
 
-                    # Remove invalid pairs or reset mark_post_sent for completed pairs
-                    to_remove = []
-                    for i, pair in enumerate(self.queue_available_pair):
-                        start_idx, end_idx, timestamp, mark_post_sent, initial_start_state, initial_end_state = pair
-                        current_start_state = self.state_manager.states.get(f"starts_{start_idx}", False)
-                        current_end_state = self.state_manager.states.get(f"ends_{end_idx}", False)
+                    # Remove invalid pairs (only for non-sent pairs)
+                    # to_remove = []
+                    # for pair in self.queue_available_pair:
+                    #     start_idx, end_idx, timestamp, mark_post_sent = pair
+                    #     if not mark_post_sent and end_idx not in end_queue:
+                    #         to_remove.append(pair)
+                    #         self.used_starts.discard(start_idx)
+                    #         self.used_ends.discard(end_idx)
+                    #         logger.debug(f"Removed non-sent pair ({start_idx}, {end_idx}) from queue_available_pair")
 
-                        # Reset mark_post_sent and timestamp if state changed and POST was sent
-                        if mark_post_sent:
-                            if current_start_state != initial_start_state:
-                                self.used_starts.discard(start_idx)
-                                logger.debug(f"Removed {start_idx} from used_starts after POST")
-                            if current_end_state != initial_end_state:
-                                self.used_ends.discard(end_idx)
-                                logger.debug(f"Removed {end_idx} from used_ends after POST")
-                            self.queue_available_pair[i] = (start_idx, end_idx, time.time(), False, current_start_state, current_end_state)
-                            logger.debug(f"Reset pair ({start_idx}, {end_idx}) with mark_post_sent=False and new timestamp due to state change")
+                    # self.queue_available_pair = [p for p in self.queue_available_pair if p not in to_remove]
+                    # logger.debug(f"After cleanup: queue_available_pair={[(p[0], p[1]) for p in self.queue_available_pair]}")
 
-                    self.queue_available_pair = [p for p in self.queue_available_pair if p not in to_remove]
-                    logger.debug(f"After cleanup: queue_available_pair={[(p[0], p[1]) for p in self.queue_available_pair]}")
-                    log_handler.flush()
-
-                    # Create new pairs (1:1 mapping)
-                    new_pairs = []
+                    # Track potential new pairs
                     for pairs in AVAILABLE_PAIRS:
                         valid_starts = [s for s in start_queue if s in pairs["starts"] and s not in self.used_starts]
                         valid_ends = [e for e in end_queue if e in pairs["ends"] and e not in self.used_ends]
                         logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
-                        log_handler.flush()
 
                         for start_idx, end_idx in zip(valid_starts, valid_ends):
-                            if (start_idx, end_idx) not in [p[:2] for p in self.queue_available_pair]:
-                                initial_start_state = self.state_manager.states.get(f"starts_{start_idx}", False)
-                                initial_end_state = self.state_manager.states.get(f"ends_{end_idx}", False)
-                                pair = (start_idx, end_idx, time.time(), False, initial_start_state, initial_end_state)
-                                new_pairs.append(pair)
-                                self.used_starts.add(start_idx)
-                                self.used_ends.add(end_idx)
-                                logger.info(f"Created new pair: ({start_idx}, {end_idx}) with initial states: start={initial_start_state}, end={initial_end_state}")
-                                log_handler.flush()
+                            pair_key = (start_idx, end_idx)
+                            if pair_key not in [p[:2] for p in self.queue_available_pair] and pair_key not in self.pending_pairs:
+                                self.pending_pairs[pair_key] = time.time()
+                                logger.debug(f"Tracking new pending pair: ({start_idx}, {end_idx}), {time.time()}")
+
+                    # Check pending pairs
+                    new_pairs = []
+                    for pair_key, timestamp in list(self.pending_pairs.items()):
+                        start_idx, end_idx = pair_key
+                        elapsed = time.time() - timestamp
+                        logger.debug(f"Checking pending pair: ({start_idx}, {end_idx}), elapsed={elapsed:.2f}s")
+                        if elapsed >= 5:
+                            pair = (start_idx, end_idx, time.time(), True)
+                            new_pairs.append(pair)
+                            self.used_starts.add(start_idx)
+                            self.used_ends.add(end_idx)
+                            data = f"{start_idx},{end_idx}"
+                            self.post_request_manager.trigger_post(data)
+                            self.sent_pairs_queue.put(pair)
+                            logger.info(f"Created and sent POST for pair: ({start_idx}, {end_idx})")
+                            del self.pending_pairs[pair_key]
 
                     self.queue_available_pair.extend(new_pairs)
                     logger.debug(f"Updated queue_available_pair: {[(p[0], p[1]) for p in self.queue_available_pair]}")
-                    log_handler.flush()
 
-                    # Check pairs for adding to used_starts/used_ends and trigger POST
+                    # Clean up pending pairs that are no longer valid
+                    # for pair_key in list(self.pending_pairs.keys()):
+                    #     start_idx, end_idx = pair_key
+                    #     if start_idx not in start_queue or end_idx not in end_queue:
+                    #         del self.pending_pairs[pair_key]
+                    #         logger.debug(f"Removed invalid pending pair: ({start_idx}, {end_idx})")
+
+                    # Check sent pairs for end_state
                     for i, pair in enumerate(self.queue_available_pair[:]):
-                        start_idx, end_idx, timestamp, mark_post_sent, initial_start_state, initial_end_state = pair
-                        current_start_state = self.state_manager.states.get(f"starts_{start_idx}", False)
-                        current_end_state = self.state_manager.states.get(f"ends_{end_idx}", False)
-                        elapsed = time.time() - timestamp
-                        logger.debug(f"Pair ({start_idx}, {end_idx}) has elapsed time: {elapsed:.2f}s")
-                        log_handler.flush()
+                        start_idx, end_idx, timestamp, mark_post_sent = pair
+                        logger.debug(f"Checking sent pair: ({start_idx}, {end_idx}), mark_post_sent={mark_post_sent}")
+                        if mark_post_sent:
+                            pair_key = (start_idx, end_idx)
+                            end_state = end_idx not in end_queue  # True if end_idx not in end_queue, False otherwise
+                            logger.debug(f"State for end_idx {end_idx}: {end_state} (derived from end_queue)")
 
-                        if elapsed >= 15 and not mark_post_sent and current_start_state == initial_start_state and current_end_state == initial_end_state:
-                            if start_idx not in self.used_starts:
-                                self.used_starts.add(start_idx)
-                                logger.debug(f"Added {start_idx} to used_starts after 15s with unchanged state")
-                            if end_idx not in self.used_ends:
-                                self.used_ends.add(end_idx)
-                                logger.debug(f"Added {end_idx} to used_ends after 15s with unchanged state")
-
-                            logger.info(f"Pair ({start_idx}, {end_idx}) is ready to send POST after {elapsed:.2f}s")
-                            data = f"{start_idx},{end_idx}"
-                            self.post_request_manager.trigger_post(data)
-                            self.queue_available_pair[i] = (start_idx, end_idx, timestamp, True, initial_start_state, initial_end_state)
-                            logger.info(f"Triggered POST for pair: ({start_idx}, {end_idx})")
-                            log_handler.flush()
+                            if end_state:
+                                logger.debug(f"Pair ({start_idx}, {end_idx}) has end_state True")
+                                # If end_state is True, record or update timestamp
+                                if pair_key not in self.sent_pairs_end_state_timestamps:
+                                    self.sent_pairs_end_state_timestamps[pair_key] = time.time()
+                                    logger.debug(f"Started tracking end_state True for pair: ({start_idx}, {end_idx}) at {time.time()}")
+                                else:
+                                    elapsed = time.time() - self.sent_pairs_end_state_timestamps[pair_key]
+                                    logger.debug(f"Pair ({start_idx}, {end_idx}) end_state True, elapsed={elapsed:.2f}s")
+                                    if elapsed >= 5:  # Wait 5 seconds before removing
+                                        self.used_starts.discard(start_idx)
+                                        self.used_ends.discard(end_idx)
+                                        logger.debug(f"Used starts and ends after end_state: ({self.used_starts}, {self.used_ends})")
+                                        self.queue_available_pair.pop(i)
+                                        logger.info(f"Removed sent pair with end_state True after 5s: ({start_idx}, {end_idx})")
+                                        del self.sent_pairs_end_state_timestamps[pair_key]
+                            # else:
+                            #     # If end_state is False, remove timestamp if it exists
+                            #     if pair_key in self.sent_pairs_end_state_timestamps:
+                            #         del self.sent_pairs_end_state_timestamps[pair_key]
+                            #         logger.debug(f"Stopped tracking end_state for pair: ({start_idx}, {end_idx}) as end_state is False")
 
                 except queue.Empty:
-                    logger.debug("pair_monitor_queue is empty")
+                    pass
 
             except Exception as e:
                 logger.error(f"Error in PairMonitor: {e}")
@@ -145,4 +154,3 @@ class PairMonitor:
         self.shutdown_event.set()
         self.thread.join()
         logger.info("PairMonitor stopped")
-        log_handler.flush()
