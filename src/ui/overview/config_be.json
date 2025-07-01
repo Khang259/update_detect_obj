@@ -1,0 +1,8 @@
+{
+    "rtsp_urls": [
+        "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
+        "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
+        "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101"
+    ],
+    "server_url": "http://"
+}
