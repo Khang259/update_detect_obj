@@ -1,3 +1,4 @@
+# queue_manager.py
 import logging
 import threading
 from queue import Queue
@@ -19,7 +20,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("queue_manager")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -45,25 +46,26 @@ class QueueManager:
                     if state:
                         if (task_id) not in self.start_queue:
                             self.start_queue.append((task_id))
-                            logger.debug(f"Added to start_queue: {(task_id)}")
+                            #logger.debug(f"Added to start_queue: {(task_id)}")
                     else:
                         if (task_id) in self.start_queue:
                             self.start_queue.remove((task_id))
-                            logger.debug(f"Removed from start_queue: {(task_id)}")
+                            #logger.debug(f"Removed from start_queue: {(task_id)}")
 
                 if task_type == "ends" and task_id in END_TASK_PATHS:
                     if not state:
                         if (task_id) not in self.end_queue:
                             self.end_queue.append((task_id))
-                            logger.debug(f"Added to end_queue: {(task_id)}")
+                            #logger.debug(f"Added to end_queue: {(task_id)}")
                     else:
                         if (task_id) in self.end_queue:
                             self.end_queue.remove((task_id))
-                            logger.debug(f"Removed from end_queue: {(task_id)}")
+                            #logger.debug(f"Removed from end_queue: {(task_id)}")
 
+                logger.debug(f"Before sending to pair_monitor_queue: {{'start_queue': {list(self.start_queue)}, 'end_queue': {list(self.end_queue)}}}")
                 self.pair_monitor_queue.put({"start_queue": list(self.start_queue), "end_queue": list(self.end_queue)})
-                logger.debug(f"Sent to pair_monitor_queue: {{'start_queue': {list(self.start_queue)}, 'end_queue': {list(self.end_queue)}}}")
-                
+                logger.debug(f"Sent to pair_monitor_queue with id: {id(self.pair_monitor_queue)}")
+
             except queue.Empty:
                 logger.debug("queue_manager_queue is empty, waiting for updates")
                 continue

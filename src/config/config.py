@@ -7,6 +7,8 @@ CAMERA_URLS = [
     # "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
     # "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101"
     "rtsp://admin:admin@192.168.0.113:8554/live"
+    # "rtsp://admin:admin@166.13.151.65:8554/live"
+
 ]
 
 BOUNDING_BOXES = [
