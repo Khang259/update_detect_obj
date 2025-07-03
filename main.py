@@ -8,7 +8,7 @@ from src.camera_thread.camera_thread import CameraThread
 from src.pair_management.pair_manager import PairManager
 from src.config.config import CAMERA_URLS, BOUNDING_BOXES, API_URL, validate_config, BBOX_TO_TASKPATH
 
-
+"""Import logging and configure it to log to files in a structured way."""
 date_str = datetime.now().strftime("%Y%m%d")
 os.makedirs("logs/logs_main", exist_ok=True)
 os.makedirs("logs/logs_errors/logs_errors_main", exist_ok=True)

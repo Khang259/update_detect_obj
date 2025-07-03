@@ -4,9 +4,11 @@ logger = logging.getLogger("config")
 
 CAMERA_URLS = [
     "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
-    "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
+    # "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
     "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101"
-    # "rtsp://admin:admin@192.168.0.115:1935"
+    # "rtsp://admin:admin@192.168.0.113:8554/live"
+    # "rtsp://admin:admin@166.13.151.65:8554/live"
+
 ]
 
 BOUNDING_BOXES = [
@@ -21,18 +23,18 @@ BOUNDING_BOXES = [
             [29, 425, 50, 547]   # Task path 10000179 (4, 442), End Point = (50, 610)
         ],
         "ends": [
-            [991, 532, 1079, 623]  # Task path 10000164
+            # [991, 532, 1079, 623]  # Task path 10000164
         ]
     },
-    {  # Camera 2: 192.168.1.28
-        "starts": [
-            [724, 441, 899, 524],  # Task path 10000146 Start(925, 391), End(958, 486)
-            [801, 571, 911, 697]   # Task path 10000234
-        ],
-        "ends": [
-            [570, 253, 668, 322]   # Task path 10000147
-        ]
-    },
+    # {  # Camera 2: 192.168.1.28
+    #     "starts": [
+    #         [724, 441, 899, 524],  # Task path 10000146
+    #         [801, 571, 911, 697]   # Task path 10000234
+    #     ],
+    #     "ends": [
+    #         #[570, 253, 668, 322]   # Task path 10000147
+    #     ]
+    # },
     {  # Camera 3: 192.168.1.29
         "starts": [
             [444, 384, 518, 485]   # Task path 10000172
@@ -87,10 +89,10 @@ AVAILABLE_PAIRS = [
         "starts": ["10000173", "10000174", "10000175", "10000176", "10000177", "10000178", "10000179"],
         "ends": ["10000170", "10000171", "10000140", "10000141"]  # Camera 3 ends
     },
-    {  # Camera 2: 192.168.1.28
-        "starts": ["10000146", "10000234"],
-        "ends": ["10000164"]  # Camera 1 end
-    },
+    # {  # Camera 2: 192.168.1.28
+    #     "starts": ["10000146", "10000234"],
+    #     "ends": ["10000164"]  # Camera 1 end
+    # },
     {  # Camera 3: 192.168.1.29
         "starts": ["10000172"],
         "ends": ["10000147"]  # Camera 2 end
