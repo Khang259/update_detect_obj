@@ -1,85 +1,99 @@
-import cv2
+import subprocess
 import numpy as np
+import cv2
+import threading
 
-class BoundingBoxDrawer:
-    def __init__(self, rtsp_url):
+class BoundingBoxDrawerFFmpeg:
+    def __init__(self, rtsp_url, width, height, window_name):
         self.rtsp_url = rtsp_url
+        self.width = width
+        self.height = height
+        self.window_name = window_name
         self.drawing = False
         self.ix, self.iy = -1, -1
         self.start_point = None
         self.end_point = None
         self.boxes = []
-        
+
     def draw_rectangle(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
             self.drawing = True
             self.ix, self.iy = x, y
             self.start_point = (x, y)
-            
+
         elif event == cv2.EVENT_MOUSEMOVE:
             if self.drawing:
                 self.end_point = (x, y)
-                
+
         elif event == cv2.EVENT_LBUTTONUP:
             self.drawing = False
             self.end_point = (x, y)
             self.boxes.append((self.ix, self.iy, x, y))
-            # In tọa độ ra terminal
-            print(f"Bounding Box: Start({self.ix}, {self.iy}), End({x}, {y})")
-            print(f"Width: {abs(x - self.ix)}, Height: {abs(y - self.iy)}")
+            print(f"[{self.window_name}] Bounding Box: Start({self.ix}, {self.iy}), End({x}, {y})")
+            print(f"[{self.window_name}] Width: {abs(x - self.ix)}, Height: {abs(y - self.iy)}")
 
     def run(self):
-        # Kết nối RTSP stream
-        cap = cv2.VideoCapture(self.rtsp_url)
-        
-        if not cap.isOpened():
-            print("Error: Cannot connect to RTSP stream")
-            return
+        command = [
+            'ffmpeg',
+            '-rtsp_transport', 'tcp',
+            '-i', self.rtsp_url,
+            '-loglevel', 'quiet',
+            '-an',
+            '-f', 'image2pipe',
+            '-pix_fmt', 'bgr24',
+            '-vcodec', 'rawvideo',
+            '-'
+        ]
 
-        # Tạo window và set mouse callback
-        cv2.namedWindow('RTSP Stream')
-        cv2.setMouseCallback('RTSP Stream', self.draw_rectangle)
+        pipe = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=10**8)
+        cv2.namedWindow(self.window_name)
+        cv2.setMouseCallback(self.window_name, self.draw_rectangle)
+
+        frame_size = self.width * self.height * 3
 
         while True:
-            ret, frame = cap.read()
-            if not ret:
-                print("Error: Cannot read frame")
+            raw_frame = pipe.stdout.read(frame_size)
+            if len(raw_frame) != frame_size:
+                print(f"[{self.window_name}] ⚠️ Không đủ dữ liệu frame. Có thể mất kết nối.")
                 break
 
-            # Tạo một bản sao của frame để vẽ
+            frame = np.frombuffer(raw_frame, dtype=np.uint8).reshape((self.height, self.width, 3))
             img = frame.copy()
 
-            # Vẽ các bounding box đã lưu
             for box in self.boxes:
                 cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (0, 255, 0), 2)
 
-            # Vẽ line đang vẽ
             if self.drawing and self.start_point and self.end_point:
                 cv2.rectangle(img, self.start_point, self.end_point, (0, 0, 255), 2)
 
-            # Hiển thị frame
-            cv2.imshow('RTSP Stream', img)
-
-            # Thoát khi nhấn 'q'
+            cv2.imshow(self.window_name, img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-        # Giải phóng tài nguyên
-        cap.release()
-        cv2.destroyAllWindows()
+        pipe.terminate()
+        cv2.destroyWindow(self.window_name)
 
 def main():
-    # Thay thế bằng RTSP URL của bạn
-    # rtsp_url = "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101"
-    rtsp_url = "rtsp://admin:admin@192.168.0.115:1935"
-    
-    # Kiểm tra URL hợp lệ
-    if not rtsp_url.startswith("rtsp://"):
-        print("Error: Invalid RTSP URL")
-        return
+    rtsp_urls = [
+        # "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
+        # "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
+        # "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101",
+        "rtsp://admin:Soncave1!@192.168.1.30:554/streaming/channels/101",
+        # "rtsp://admin:Soncave1!@192.168.1.31:554/streaming/channels/101",
+    ]
 
-    drawer = BoundingBoxDrawer(rtsp_url)
-    drawer.run()
+    width, height = 1280, 720  # Cập nhật theo độ phân giải camera thật
+
+    threads = []
+    for i, url in enumerate(rtsp_urls):
+        window_name = f"Camera {i+1}"
+        drawer = BoundingBoxDrawerFFmpeg(url, width, height, window_name)
+        t = threading.Thread(target=drawer.run)
+        t.start()
+        threads.append(t)
+
+    for t in threads:
+        t.join()
 
 if __name__ == "__main__":
     main()

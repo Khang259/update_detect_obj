@@ -29,7 +29,7 @@ def detect_lines(roi: np.ndarray) -> bool:
     try:
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, 50, 150, apertureSize=3)
-        lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=50, minLineLength=60, maxLineGap=10)
+        lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=60, minLineLength=60, maxLineGap=10)
         has_lines = lines is not None and len(lines) > 0
         logger.debug(f"Line detection in ROI: {'lines detected' if has_lines else 'no lines'}")
         return has_lines

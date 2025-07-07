@@ -1,10 +1,14 @@
+
 import cv2
 import threading
 import logging
 from queue import Queue
-import queue  # Add import for queue.Empty
-from datetime import datetime, time
+import queue
+from datetime import datetime
 import os
+import subprocess
+import numpy as np
+
 from src.utils.utils import detect_lines, draw_lines_and_text
 from src.config.config import BBOX_TO_TASKPATH
 
@@ -29,7 +33,7 @@ class DisplayThread(threading.Thread):
         super().__init__()
         self.camera_id = camera_id
         self.frame_queue = frame_queue
-        self.shutdown_event = threading.Event()
+        self.shutdown_event = shutdown_event
         self.running = True
         self.window_created = False
         logger.info(f"DisplayThread for camera {camera_id} initialized")
@@ -45,7 +49,7 @@ class DisplayThread(threading.Thread):
                     self.shutdown_event.set()
                     self.running = False
                     break
-            except queue.Empty:  # Fix: Use queue.Empty
+            except queue.Empty:
                 continue
             except Exception as e:
                 logger.error(f"Error displaying frame for camera {self.camera_id}: {e}")
@@ -54,7 +58,7 @@ class DisplayThread(threading.Thread):
         if self.window_created:
             try:
                 cv2.destroyWindow(f"Camera {self.camera_id}")
-                cv2.waitKey(1)  # Ensure GUI updates
+                cv2.waitKey(1)
                 logger.info(f"Display window for camera {self.camera_id} closed")
             except Exception as e:
                 logger.error(f"Error closing display window for camera {self.camera_id}: {e}")
@@ -62,34 +66,45 @@ class DisplayThread(threading.Thread):
             logger.info(f"No display window was created for camera {self.camera_id}")
 
 class CameraThread(threading.Thread):
-    def __init__(self, camera_id: int, url: str, bounding_boxes: dict, state_queue: Queue, shutdown_event: threading.Event):
+    def __init__(self, camera_id: int, url: str, bounding_boxes: dict, state_queue: Queue, shutdown_event: threading.Event, width=1280, height=720):
         super().__init__()
         self.camera_id = camera_id
         self.url = url
         self.bounding_boxes = bounding_boxes
         self.state_queue = state_queue
         self.shutdown_event = shutdown_event
-        self.cap = cv2.VideoCapture(url)
         self.running = True
         self.frame_queue = Queue(maxsize=10)
         self.display_thread = DisplayThread(camera_id, self.frame_queue, shutdown_event)
         self.display_thread.start()
+        self.width = width
+        self.height = height
         logger.info(f"CameraThread for camera {camera_id} initialized with URL {url}")
 
     def run(self):
-        if not self.cap.isOpened():
-            logger.error(f"Camera {self.camera_id} failed to open stream at {self.url}")
-            self.shutdown_event.set()
-            self.display_thread.running = False
-            self.display_thread.join(timeout=2.0)
-            return
+        command = [
+            "ffmpeg",
+            "-rtsp_transport", "tcp",
+            "-i", self.url,
+            "-loglevel", "quiet",
+            "-an",
+            "-f", "image2pipe",
+            "-pix_fmt", "bgr24",
+            "-vcodec", "rawvideo",
+            "-"
+        ]
+
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=10**8)
+        frame_size = self.width * self.height * 3
 
         while self.running and not self.shutdown_event.is_set():
-            ret, frame = self.cap.read()
-            if not ret:
-                logger.error(f"Camera {self.camera_id} failed to read frame")
-                time.sleep(0.1)  # Prevent tight loop on failure
+            raw_frame = process.stdout.read(frame_size)
+            if len(raw_frame) != frame_size:
+                logger.error(f"Camera {self.camera_id} received incomplete frame")
                 continue
+
+            frame = np.frombuffer(raw_frame, dtype=np.uint8).reshape((self.height, self.width, 3))
+            frame = frame.copy()
 
             updates = {}
             for task_type in ["starts", "ends"]:
@@ -115,8 +130,10 @@ class CameraThread(threading.Thread):
 
             if not self.frame_queue.full():
                 self.frame_queue.put(frame)
-
+            else:
+                logger.warning(f"Frame queue full for camera {self.camera_id}, frame dropped")
+            
+        process.terminate()
         self.display_thread.running = False
         self.display_thread.join(timeout=2.0)
-        self.cap.release()
         logger.info(f"CameraThread for camera {self.camera_id} stopped")

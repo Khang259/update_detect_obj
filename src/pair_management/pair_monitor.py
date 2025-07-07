@@ -1,4 +1,3 @@
-
 import logging
 import time
 import threading
@@ -22,7 +21,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("pair_manager")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -42,7 +41,6 @@ class PairMonitor:
         self.start_times = {}  # {start_idx: timestamp}
         self.end_times = {}    # {end_idx: timestamp}
         self.end_removal_times = {}  # {end_idx: timestamp}
-        self.start_removal_times = {}  # {start_idx: timestamp}
         logger.debug("PairMonitor initialized")
 
     def start_monitoring(self):
@@ -62,7 +60,7 @@ class PairMonitor:
                         queues = self.pair_monitor_queue.get()
                         start_queue = queues.get("start_queue", [])
                         end_queue = queues.get("end_queue", [])
-                        logger.info(f"Received queues: start={start_queue}, end={end_queue}")
+                        logger.debug(f"Received queues: start={start_queue}, end={end_queue}")
 
                         # Create new pairs
                         new_pairs = []
@@ -79,7 +77,7 @@ class PairMonitor:
                             for e in end_queue:
                                 if e in pairs["ends"] and e not in self.used_ends:
                                     valid_ends.append(e)
-                            logger.info(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
+                            logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
 
                             # Cập nhật thời gian xuất hiện chỉ cho valid_starts và valid_ends
                             current_time = time.time()
@@ -94,27 +92,22 @@ class PairMonitor:
                                     logger.debug(f"End index {end_idx} added to end_times at {current_time}")
 
                             # Cập nhật end_removal_times
-                            for start_idx in list(self.start_removal_times.keys()):
-                                if start_idx in start_queue:
-                                    del self.start_removal_times[start_idx]
-                                    logger.debug(f"Start index {start_idx} reappeared in start_queue, removed from start_removal_times")
-
-                            for end_idx in list(self.end_removal_times.keys()):
-                                if end_idx in end_queue:
-                                    del self.end_removal_times[end_idx]
-                                    logger.debug(f"End index {end_idx} reappeared in end_queue, removed from end_removal_times")
-                            # for end_idx in self.end_times:
-                            #     if end_idx not in end_queue and end_idx not in self.end_removal_times:
-                            #         self.end_removal_times[end_idx] = current_time
-                            #         logger.debug(f"End index {end_idx} not in end_queue, added to end_removal_times at {current_time}")
+                            # for end_idx in list(self.end_removal_times.keys()):
+                            #     if end_idx in end_queue:
+                            #         del self.end_removal_times[end_idx]
+                            #         logger.debug(f"End index {end_idx} reappeared in end_queue, removed from end_removal_times")
+                            for end_idx in self.end_times:
+                                if end_idx not in end_queue:
+                                    self.end_removal_times[end_idx] = current_time
+                                    logger.debug(f"End index {end_idx} not in end_queue, added to end_removal_times at {current_time}")
 
                             # Kiểm tra thời gian tồn tại 5 giây
                             for start_idx in valid_starts:
                                 if start_idx in self.start_times:
                                     elapsed = current_time - self.start_times[start_idx]
-                                    if elapsed >= 15:
+                                    if elapsed >= 10:
                                         ready_starts.append(start_idx)
-                                        logger.info(f"Start index {start_idx} has lasted {elapsed:.2f}s, added to ready_starts")
+                                        logger.debug(f"Start index {start_idx} has lasted {elapsed:.2f}s, added to ready_starts")
                                     else:
                                         logger.warning(f"Start index {start_idx} has lasted {elapsed:.2f}s, not yet 5 seconds")
                                 else:
@@ -123,9 +116,9 @@ class PairMonitor:
                             for end_idx in valid_ends:
                                 if end_idx in self.end_times:
                                     elapsed = current_time - self.end_times[end_idx]
-                                    if elapsed >= 15:
+                                    if elapsed >= 10:
                                         ready_ends.append(end_idx)
-                                        logger.info(f"End index {end_idx} has lasted {elapsed:.2f}s, added to ready_ends")
+                                        logger.debug(f"End index {end_idx} has lasted {elapsed:.2f}s, added to ready_ends")
                                     else:
                                         logger.warning(f"End index {end_idx} has lasted {elapsed:.2f}s, not yet 5 seconds")
                                 else:
@@ -151,8 +144,9 @@ class PairMonitor:
                         start_idx, end_idx, timestamp, mark_post_sent = pair
                         logger.debug(f"Checking health of pair")
                         if not mark_post_sent:
+                            logger.info(f"Pair ({start_idx}, {end_idx}) is ready to send POST")
                             data = f"{start_idx},{end_idx}"
-                            self.post_request_manager.trigger_post(data)
+                            #self.post_request_manager.trigger_post(data)
                             self.queue_available_pair[i] = (start_idx, end_idx, timestamp, True)
                             logger.info(f"Triggered POST for pair: ({start_idx}, {end_idx})")
                         recycle_pairs.append(self.queue_available_pair[i])
@@ -172,6 +166,19 @@ class PairMonitor:
                                     self.queue_available_pair.remove(pair)
                                     self.used_starts.discard(start_idx)
                                     self.used_ends.discard(end_idx)
+                                    # Reset thời gian của start_idx và end_idx trong self.start_times và self.end_times
+                                    if start_idx in self.start_times:
+                                        self.start_times[start_idx] = current_time
+                                        logger.debug(f"Reset start_idx {start_idx} time to {current_time} in start_times")
+                                    else:
+                                        self.start_times[start_idx] = current_time
+                                        logger.debug(f"Added and reset start_idx {start_idx} time to {current_time} in start_times")
+                                    if end_idx in self.end_times:
+                                        self.end_times[end_idx] = current_time
+                                        logger.debug(f"Reset end_idx {end_idx} time to {current_time} in end_times")
+                                    else:
+                                        self.end_times[end_idx] = current_time
+                                        logger.debug(f"Added and reset end_idx {end_idx} time to {current_time} in end_times")
                                     logger.debug(f"Removed start_idx {start_idx} and end_idx {end_idx} from used_starts and used_ends")
                                     logger.debug(f"Used start, used end after removal{self.used_ends}, {self.used_starts}")
                                     logger.debug(f"Removed start_idx {start_idx} and end_idx {end_idx} from valid_starts and valid_ends")
@@ -196,4 +203,3 @@ class PairMonitor:
         self.shutdown_event.set()
         self.thread.join()
         logger.info("PairMonitor stopped")
-
