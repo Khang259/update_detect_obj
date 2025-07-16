@@ -20,7 +20,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("utils")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -28,8 +28,8 @@ def detect_lines(roi: np.ndarray) -> bool:
     """Detect lines in ROI using Hough Transform."""
     try:
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(gray, 50, 150, apertureSize=3)
-        lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=60, minLineLength=60, maxLineGap=10)
+        edges = cv2.Canny(gray, 70, 150, apertureSize=3)
+        lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=50, minLineLength=55, maxLineGap=10)
         has_lines = lines is not None and len(lines) > 0
         logger.debug(f"Line detection in ROI: {'lines detected' if has_lines else 'no lines'}")
         return has_lines
@@ -43,7 +43,7 @@ def draw_lines_and_text(frame: np.ndarray, bbox: list, has_lines: bool):
         x1,y1, x2, y2 = bbox
         color = (0, 255, 0) if has_lines else (0, 0, 255)
         cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-        label = "Detect cargo" if has_lines else "None"
+        label = f"Detect cargo " if has_lines else "None"
         cv2.putText(frame, label, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         logger.debug(f"Drew bounding box {bbox} with label '{label}'")
     except Exception as e:

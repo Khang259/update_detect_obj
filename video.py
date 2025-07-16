@@ -80,6 +80,3 @@
 
 # # Clean up
 # mp_process.join()
-
-
-print(int("        12         "))

@@ -78,7 +78,7 @@ def main():
         # "rtsp://admin:Soncave1!@192.168.1.27:554/streaming/channels/101",
         # "rtsp://admin:Soncave1!@192.168.1.28:554/streaming/channels/101",
         # "rtsp://admin:Soncave1!@192.168.1.29:554/streaming/channels/101",
-        "rtsp://admin:Soncave1!@192.168.1.30:554/streaming/channels/101",
+         "rtsp://admin:Soncave1!@192.168.1.30:554/streaming/channels/101",
         # "rtsp://admin:Soncave1!@192.168.1.31:554/streaming/channels/101",
     ]
 
