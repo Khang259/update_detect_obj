@@ -34,8 +34,6 @@ class PairMonitor:
         self.queue_available_pair = []
         self.used_starts = set()
         self.used_ends = set()
-        self.ready_starts_set = set()  # Theo dõi các start_idx đã vào ready_starts
-        self.ready_ends_set = set()    # Theo dõi các end_idx đã vào ready_ends
         self.shutdown_event = threading.Event()
         self.thread = threading.Thread(target=self.run)
         self.last_print_time = 0  # Thời gian in trên terminal
@@ -76,30 +74,19 @@ class PairMonitor:
                             for s in start_queue:
                                 if s in pairs["starts"] and s not in self.used_starts:
                                     valid_starts.append(s)
-                                    # Xóa mốc thời gian nếu start_idx đã từng ở ready_starts
-                                    if s in self.ready_starts_set and s in self.start_times:
-                                        del self.start_times[s]
-                                        logger.debug(f"Removed start_idx {s} from start_times as it was previously in ready_starts")
                             for e in end_queue:
                                 if e in pairs["ends"] and e not in self.used_ends:
                                     valid_ends.append(e)
-                                    # Xóa mốc thời gian nếu end_idx đã từng ở ready_ends
-                                    if e in self.ready_ends_set and e in self.end_times:
-                                        del self.end_times[e]
-                                        logger.debug(f"Removed end_idx {e} from end_times as it was previously in ready_ends")
                             logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
 
-                            # Cập nhật thời gian xuất hiện chỉ cho valid_starts và valid_ends
+                            # Cập nhật thời gian xuất hiện cho valid_starts và valid_ends, luôn reset
                             current_time = time.time()
                             for start_idx in valid_starts:
-                                if start_idx not in self.start_times:
-                                    self.start_times[start_idx] = current_time
-                                    logger.debug(f"Start index {start_idx} added to start_times at {current_time}")
-
+                                self.start_times[start_idx] = current_time
+                                logger.debug(f"Start index {start_idx} (re)set to start_times at {current_time}")
                             for end_idx in valid_ends:
-                                if end_idx not in self.end_times:
-                                    self.end_times[end_idx] = current_time
-                                    logger.debug(f"End index {end_idx} added to end_times at {current_time}")
+                                self.end_times[end_idx] = current_time
+                                logger.debug(f"End index {end_idx} (re)set to end_times at {current_time}")
 
                             # Kiểm tra thời gian tồn tại 10 giây
                             for start_idx in valid_starts:
@@ -107,7 +94,6 @@ class PairMonitor:
                                     elapsed = current_time - self.start_times[start_idx]
                                     if elapsed >= 10:
                                         ready_starts.append(start_idx)
-                                        self.ready_starts_set.add(start_idx)  # Lưu vào ready_starts_set
                                         logger.debug(f"Start index {start_idx} has lasted {elapsed:.2f}s, added to ready_starts")
                                     else:
                                         logger.warning(f"Start index {start_idx} has lasted {elapsed:.2f}s, not yet 10 seconds")
@@ -119,7 +105,6 @@ class PairMonitor:
                                     elapsed = current_time - self.end_times[end_idx]
                                     if elapsed >= 10:
                                         ready_ends.append(end_idx)
-                                        self.ready_ends_set.add(end_idx)  # Lưu vào ready_ends_set
                                         logger.debug(f"End index {end_idx} has lasted {elapsed:.2f}s, added to ready_ends")
                                     else:
                                         logger.warning(f"End index {end_idx} has lasted {elapsed:.2f}s, not yet 10 seconds")
