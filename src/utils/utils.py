@@ -4,7 +4,6 @@ import numpy as np
 import logging
 from datetime import datetime
 import os
-
 # Logging configuration
 date_str = datetime.now().strftime("%Y%m%d")
 
@@ -37,13 +36,14 @@ def detect_lines(roi: np.ndarray) -> bool:
         logger.error(f"Error detecting lines in ROI: {e}")
         return False
 
-def draw_lines_and_text(frame: np.ndarray, bbox: list, has_lines: bool):
+def draw_lines_and_text(frame: np.ndarray, bbox: list, has_lines: bool) -> None:
     """Draw bounding box and status label on frame."""
     try:
         x1,y1, x2, y2 = bbox
         color = (0, 255, 0) if has_lines else (0, 0, 255)
         cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-        label = f"Detect cargo " if has_lines else "None"
+        label = f"Detect cargo _" if has_lines else "None"
+
         cv2.putText(frame, label, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         logger.debug(f"Drew bounding box {bbox} with label '{label}'")
     except Exception as e:

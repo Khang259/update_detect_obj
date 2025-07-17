@@ -21,7 +21,7 @@ error_handler.setFormatter(log_formatter)
 error_handler.setLevel(logging.ERROR)
 
 logger = logging.getLogger("pair_manager")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(log_handler)
 logger.addHandler(error_handler)
 
@@ -50,6 +50,7 @@ class PairMonitor:
     def run(self):
         while not self.shutdown_event.is_set():
             current_time = time.time()
+            readable_time = time.strftime("%H:%M:%S", time.localtime(current_time))
             if current_time - self.last_print_time >= 0.5:
                 print("PairMonitor is running...")
                 self.last_print_time = current_time
@@ -80,13 +81,14 @@ class PairMonitor:
                             logger.debug(f"For AVAILABLE_PAIRS entry: valid_starts={valid_starts}, valid_ends={valid_ends}")
 
                             # Cập nhật thời gian xuất hiện cho valid_starts và valid_ends, luôn reset
-                            current_time = time.time()
                             for start_idx in valid_starts:
-                                self.start_times[start_idx] = current_time
-                                logger.debug(f"Start index {start_idx} (re)set to start_times at {current_time}")
+                                if start_idx not in self.start_times:
+                                    self.start_times[start_idx] = current_time
+                                    logger.debug(f"Start index {start_idx} added to start_times at {readable_time}")
                             for end_idx in valid_ends:
-                                self.end_times[end_idx] = current_time
-                                logger.debug(f"End index {end_idx} (re)set to end_times at {current_time}")
+                                if end_idx not in self.end_times:
+                                    self.end_times[end_idx] = current_time
+                                    logger.debug(f"End index {end_idx} added to end_times at {readable_time}")
 
                             # Kiểm tra thời gian tồn tại 10 giây
                             for start_idx in valid_starts:
@@ -151,6 +153,12 @@ class PairMonitor:
                                 self.used_starts.discard(start_idx)
                                 self.used_ends.discard(end_idx)
                                 del self.end_disappearance_times[end_idx]
+                                if start_idx in self.start_times:
+                                    del self.start_times[start_idx]
+                                    logger.debug(f"Removed start_idx {start_idx} from start_times")
+                                if end_idx in self.end_times:
+                                    del self.end_times[end_idx]
+                                    logger.debug(f"Removed end_idx {end_idx} from end_times")
                                 logger.debug(f"Removing pair ({start_idx}, {end_idx}) from queue_available_pair after {elapsed_remove:.2f}s absence")
                                 logger.debug(f"Used starts after removal: {self.used_starts}, Used ends after removal: {self.used_ends}")
                                 logger.debug(f"Removed start_idx {start_idx} and end_idx {end_idx} from valid_starts and valid_ends")
