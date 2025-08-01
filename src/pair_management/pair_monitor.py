@@ -134,7 +134,7 @@ class PairMonitor:
                         if not mark_post_sent:
                             logger.info(f"Pair ({start_idx}, {end_idx}) is ready to send POST")
                             data = f"{start_idx},{end_idx}"
-                            self.post_request_manager.trigger_post(data)
+                            #self.post_request_manager.trigger_post(data)
                             self.queue_available_pair[i] = (start_idx, end_idx, timestamp, True)
 
                         recycle_pairs.append(self.queue_available_pair[i])
