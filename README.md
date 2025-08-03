@@ -1,3 +1,8 @@
+#Mô tả dự án
+Hệ thống sử dụng camera IP (RTSP) để giám sát khu vực cấp/trả hàng, 
+tự động phát hiện hàng hóa bằng thuật toán Hough Transform, 
+và gửi yêu cầu POST đến hệ thống điều phối khi phát hiện điều kiện hợp lệ.
+
 project/
 ├── main.py              # Tệp chính để khởi chạy chương trình
 ├── camera_thread.py     # Xử lý luồng RTSP và phát hiện hàng bằng Hough Transform
